@@ -21,10 +21,6 @@ class User(Base):
         hashed_password = bcrypt.hashpw(plaintext_password.encode('utf-8'), bcrypt.gensalt())
         self.password = hashed_password.decode('utf-8')
 
-    def get_password(self, plaintext_password) -> str:
-        dehashed_password = bcrypt.hashpw(plaintext_password, bcrypt.gensalt()).decode()
-        return plaintext_password
-
 
 class Sessions(Base):
     __tablename__ = "sessions"
@@ -50,5 +46,3 @@ engine = create_engine(connection_string)
 
 # создаем таблицы
 Base.metadata.create_all(bind=engine)
-
-

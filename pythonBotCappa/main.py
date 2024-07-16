@@ -109,9 +109,17 @@ async def authorization(event):
             hashed_password = get_hashed_password(login.text)
             if hashed_password:
                 await conv.send_message(f'Захешированный пароль для пользователя {login.text}: {hashed_password}')
+
                 # надо просить инпут пароля от пользователя, хешировать его и сравнивать хеши, если совпадают то
                 # пускать как бы на сайт пока селениум не прикручен и записывать в бд в таблицу sessions данные о
                 # заходе в аккаунт
+                with Session(autoflush=False, bind=engine) as db:
+                    user_id = db.query(User.id).filter_by(username=login.text).first()
+                    new_sess = Sessions(user_id=user_id)
+                    db.add(new_sess)
+                    db.commit()
+                    await conv.send_message('Допустим зашли в аккаунт, отметили в базе данных')
+
             else:
                 await conv.send_message('Пользователь не найден.')
 
