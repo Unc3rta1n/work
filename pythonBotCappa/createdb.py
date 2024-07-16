@@ -15,12 +15,15 @@ class User(Base):
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     registration_time = Column(DateTime(timezone=True), server_default=func.now())
+    sessions = relationship("Sessions", back_populates="user")
 
     def set_password(self, plaintext_password):
         hashed_password = bcrypt.hashpw(plaintext_password.encode('utf-8'), bcrypt.gensalt())
         self.password = hashed_password.decode('utf-8')
 
-    sessions = relationship("Sessions", back_populates="user")
+    def get_password(self, plaintext_password) -> str:
+        dehashed_password = bcrypt.hashpw(plaintext_password, bcrypt.gensalt()).decode()
+        return plaintext_password
 
 
 class Sessions(Base):
@@ -49,9 +52,3 @@ engine = create_engine(connection_string)
 Base.metadata.create_all(bind=engine)
 
 
-# создаем саму сессию базы данных
-with Session(autoflush=False, bind=engine) as db:
-    #unc3rta1n = User(username="unc3rta1n")
-    #unc3rta1n.set_password('12345')
-    #db.add(unc3rta1n)
-    db.commit()
