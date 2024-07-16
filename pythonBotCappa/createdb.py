@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, Session, relationship
+from sqlalchemy.orm import DeclarativeBase, relationship, Session
 import configparser
 from sqlalchemy.sql import func
 import bcrypt
@@ -19,6 +19,8 @@ class User(Base):
     def set_password(self, plaintext_password):
         hashed_password = bcrypt.hashpw(plaintext_password.encode('utf-8'), bcrypt.gensalt())
         self.password = hashed_password.decode('utf-8')
+
+    sessions = relationship("Sessions", back_populates="user")
 
 
 class Sessions(Base):
@@ -45,3 +47,11 @@ engine = create_engine(connection_string)
 
 # создаем таблицы
 Base.metadata.create_all(bind=engine)
+
+
+# создаем саму сессию базы данных
+with Session(autoflush=False, bind=engine) as db:
+    #unc3rta1n = User(username="unc3rta1n")
+    #unc3rta1n.set_password('12345')
+    #db.add(unc3rta1n)
+    db.commit()

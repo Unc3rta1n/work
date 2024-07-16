@@ -34,28 +34,27 @@ async def start(event):
 @client.on(events.NewMessage(pattern='/registrate'))
 async def registrate(event):
     async with client.conversation(event.sender_id) as conv:
-        await conv.send_message('Введите ваш логин:')
-        logging.info(f'Registrate command received from {event.sender_id}')
-        login = await conv.get_response()
-        # создаем сессию базы данных
-        with Session(autoflush=False, bind=engine) as db:
-            
-            user_data = db.query(User).filter_by(username=login.text)
-            if not user_data:
-                await conv.send_message('Введите ваш пароль:')
-                user_password = await conv.get_response()
+        while True:
+            await conv.send_message('Введите ваш логин:')
+            logging.info(f'Registrate command received from {event.sender_id}')
+            login = await conv.get_response()
 
-                new_user = User(username=login.text)
-                new_user.set_password(user_password.text)
-                await conv.send_message('Вы успешно зарегистрированы!')
-                logging.info(f'User {login.text} registered successfully.')
+            with Session(autoflush=False, bind=engine) as db:
+                user_data = db.query(User).filter_by(username=login.text).first()
+                if user_data:
+                    await conv.send_message('Этот логин уже существует. Попробуйте другой.')
+                    logging.info(f'Attempted registration with existing username: {login.text}')
+                else:
+                    await conv.send_message('Введите ваш пароль:')
+                    user_password = await conv.get_response()
 
-                db.add(new_user)
-                db.commit()
-            else:
-                await event.respond('Этот логин уже существует. Попробуйте другой.')
-                logging.info(f'Attempted registration with existing username: {login.text}')
-
+                    new_user = User(username=login.text)
+                    new_user.set_password(user_password.text)
+                    db.add(new_user)
+                    db.commit()
+                    await conv.send_message('Вы успешно зарегистрированы!')
+                    logging.info(f'User {login.text} registered successfully.')
+                    break
 
 # Start the client
 client.start()
