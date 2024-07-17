@@ -1,21 +1,12 @@
-import selenium
+
 from selenium.webdriver import Edge, EdgeOptions
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
 
-class CappaRegAuth:
-    """Класс для регистрации\\авторизации пользователя на сайте cappa.csu.ru"""
 
-    def __init__(self, username: str, password: str, email: str, first_name: str, last_name: str):
+class Cappa:
+    def __init__(self):
         self.url = "https://cappa.csu.ru/"
-        self.username = username
-        self.password = password
-        self.email = email
-        self.first_name = first_name
-        self.last_name = last_name
-
         self.options = EdgeOptions()
         self.options.add_argument("start-maximized")
         self.options.add_argument("--disable-blink-features=AutomationControlled")
@@ -26,6 +17,18 @@ class CappaRegAuth:
         self.options.add_argument("--disable-setuid-sandbox")
         self.options.add_argument("--disable-dev-shm-usage")
         self.options.add_argument("--headless")
+
+
+class CappaReg(Cappa):
+    """Класс для регистрации пользователя на сайте cappa.csu.ru"""
+
+    def __init__(self, username: str, password: str, email: str, first_name: str, last_name: str):
+        super().__init__()  # Вызовите __init__ базового класса
+        self.username = username
+        self.password = password
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
 
     def registrate(self):
         try:
@@ -58,6 +61,7 @@ class CappaRegAuth:
                     cappa_text_field = driver.find_element(By.XPATH, xpath)
                     cappa_text_field.click()
                     cappa_text_field.send_keys(value)
+
                 # клик на кнопку регистрации
                 cappa_button = driver.find_element(By.XPATH,
                                                    '/html/body/div/main/div/div[2]/div/form/input[3]')
@@ -71,11 +75,9 @@ class CappaRegAuth:
                     cappa_error = driver.find_element(By.XPATH,
                                                       '/html/body/div/main/div/div[2]/div/form/small/ul/li')
                     print(cappa_error.text)
-                # ну и как бы вроде как зарегались но не понятно
 
         except Exception as e:
             print(f"Ошибка при регистрации: {e}")
-            # Дополнительная обработка ошибок
 
     def authorizate(self):
         try:
@@ -86,5 +88,5 @@ class CappaRegAuth:
             print(f"Ошибка при авторизации: {e}")
 
 
-Cappa = CappaRegAuth('sakldadkl123akdlsajkldasjkldasd', '123', 'dsaddsa11dsa@ya.ru', 'sdadsadsa', 'daadsdasadsdas')
+Cappa = CappaReg('sakldadkl123akdlsajkldasjkldasd', '123', 'dsaddsa11dsa@ya.ru', 'sdadsadsa', 'daadsdasadsdas')
 Cappa.registrate()

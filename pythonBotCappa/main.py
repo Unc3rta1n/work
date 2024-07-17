@@ -83,7 +83,7 @@ def get_all_usernames() -> list:
         return []
 
 
-# Функция, возвращающая хешированный пароль(зачем она нужна? не придумал еще)
+# Функция, возвращающая хешированный пароль
 def get_hashed_password(login: str) -> str | None:
     try:
         with Sessionlocal() as session:
