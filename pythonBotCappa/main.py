@@ -1,10 +1,11 @@
 import logging
 import configparser
+import os
 from telethon import TelegramClient, events
 from createdb import User, Sessions
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, Column
-import bcrypt
+from sqlalchemy import create_engine
+
 
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
@@ -13,13 +14,14 @@ console_handler.setFormatter(formatter)
 
 logging.basicConfig(level=logging.INFO, handlers=[console_handler])
 
-config = configparser.ConfigParser()  # создаём объектапарсера
+config = configparser.ConfigParser()  # создаём объект парсера
 config.read("settings.ini")  # читаем конфиг
 
 # Получаем данные из конфигурации
 username = config["SQLAlchemy"]["username"].strip('"')
 password = config["SQLAlchemy"]["password"].strip('"')
 # убираем одни кавычки, иначе строка получается в двойных кавычках
+
 
 # Создаем строку подключения с использованием f-строки
 connection_string = f"postgresql://{username}:{password}@localhost/Cappa_bot"
@@ -77,7 +79,7 @@ def get_all_usernames() -> list:
 
 
 # Функция, возвращающая хешированный пароль(зачем она нужна? не придумал еще)
-def get_hashed_password(login) -> str | None:
+def get_hashed_password(login: str) -> str | None:
     try:
         with Session(autoflush=False, bind=engine) as session:
             user = session.query(User).filter_by(username=login).first()
@@ -131,6 +133,7 @@ async def authorization(event):
 
             else:
                 await conv.send_message('Пользователь не найден.')
+
 
 # Start the client
 client.start()
