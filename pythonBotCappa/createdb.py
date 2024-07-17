@@ -5,7 +5,8 @@ from sqlalchemy.sql import func
 import bcrypt
 
 
-class Base(DeclarativeBase): pass
+class Base(DeclarativeBase):
+    pass
 
 
 class User(Base):
