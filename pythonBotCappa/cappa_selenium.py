@@ -1,6 +1,6 @@
 import selenium
 
-from undetected_chromedriver import Chrome, ChromeOptions
+from selenium.webdriver import Edge, EdgeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -15,8 +15,8 @@ class CappaRegAuth:
         self.email = email
         self.name = name
         self.surname = surname
-        
-        self.options = ChromeOptions()
+
+        self.options = EdgeOptions()
         self.options.add_argument("start-maximized")
         self.options.add_argument("--disable-blink-features=AutomationControlled")
         self.options.add_argument("--no-sandbox")
@@ -27,10 +27,22 @@ class CappaRegAuth:
         self.options.add_argument("--disable-dev-shm-usage")
         self.options.add_argument("--headless")
 
-    def registrate(self) #-> а че возвращать то, надо подумать:
-    try:
-
-        pass
+    def registrate(self):
+        try:
+            with Edge(options=self.options) as driver:
+                driver.get(self.url)
+                # Дополнительный код для регистрации пользователя
+                pass
+        except Exception as e:
+            print(f"Ошибка при регистрации: {e}")
+            # Дополнительная обработка ошибок
 
     def authorizate(self):
-        pass
+        try:
+            with Edge(options=self.options) as driver:
+                driver.get(self.url)
+                # Дополнительный код для авторизации пользователя
+                pass
+        except Exception as e:
+            print(f"Ошибка при авторизации: {e}")
+            # Дополнительная обработка ошибок
