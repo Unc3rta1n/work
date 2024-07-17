@@ -6,10 +6,14 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, Column
 import bcrypt
 
-# Setup logging
-logging.basicConfig(level=logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
-config = configparser.ConfigParser()  # создаём объекта парсера
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
+
+logging.basicConfig(level=logging.INFO, handlers=[console_handler])
+
+config = configparser.ConfigParser()  # создаём объектапарсера
 config.read("settings.ini")  # читаем конфиг
 
 # Получаем данные из конфигурации
@@ -25,27 +29,28 @@ client = TelegramClient('bot', int(config["Telethon"]["api_id"]), config["Teleth
     bot_token=config["Telethon"]["bot_token"])
 
 
-# Handler for the /start command
+# Обработчик для команды /start
 @client.on(events.NewMessage(pattern='/start'))
 async def start(event):
-    await event.respond('Hello! I am a Cappa_bot. How can I assist you today?')
-    logging.info(f'Start command received from {event.sender_id}')
+    await event.respond('Привет я Каппа_бот. Ты хочешь зарегистрироваться(/registrate) или зайти в аккаунт('
+                        '/authorization)?')
+    logging.info(f'Команда /start получена от {event.sender_id}')
 
 
-# Handler for the /registrate command
+# Обработчик для команды /registrate
 @client.on(events.NewMessage(pattern='/registrate'))
 async def registrate(event):
     async with client.conversation(event.sender_id) as conv:
         while True:
             await conv.send_message('Введите ваш логин:')
-            logging.info(f'Registrate command received from {event.sender_id}')
+            logging.info(f'Команда /registrate получена от {event.sender_id}')
             login = await conv.get_response()
 
             with Session(autoflush=False, bind=engine) as db:
                 user_data = db.query(User).filter_by(username=login.text).first()
                 if user_data:
                     await conv.send_message('Этот логин уже существует. Попробуйте другой.')
-                    logging.info(f'Attempted registration with existing username: {login.text}')
+                    logging.info(f'Попытка регистрации с уже существующим логином: {login.text}')
                 else:
                     await conv.send_message('Введите ваш пароль:')
                     user_password = await conv.get_response()
@@ -55,11 +60,11 @@ async def registrate(event):
                     db.add(new_user)
                     db.commit()
                     await conv.send_message('Вы успешно зарегистрированы!')
-                    logging.info(f'User {login.text} registered successfully.')
+                    logging.info(f'Пользователь {login.text} успешно зарегистрирован.')
                     break
 
 
-# Function for getting registered names
+# Функция, возвращающая список зарегистрированных пользователей
 def get_all_usernames() -> list:
     try:
         with Session(autoflush=False, bind=engine) as db:
@@ -67,11 +72,11 @@ def get_all_usernames() -> list:
             usernames = [user.username for user in users]
             return usernames
     except Exception as e:
-        logging.error(f"Error fetching usernames: {e}")
+        logging.error(f"Ошибка при выборке имен пользователей: {e}")
         return []
 
 
-# Function for getting hashed password
+# Функция, возвращающая хешированный пароль(зачем она нужна? не придумал еще)
 def get_hashed_password(login) -> str | None:
     try:
         with Session(autoflush=False, bind=engine) as session:
@@ -81,11 +86,11 @@ def get_hashed_password(login) -> str | None:
             else:
                 return None
     except Exception as e:
-        logging.error(f"Error fetching password for username {login}: {e}")
+        logging.error(f"Ошибка при поиске хеш-пароля по логину {login}: {e}")
         return None
 
 
-# Handler for the /authorization command
+# Обработчик для команды /authorization
 @client.on(events.NewMessage(pattern="/authorization"))
 async def authorization(event):
     logging.info(f'Authorization command received from {event.sender_id}')
@@ -95,7 +100,7 @@ async def authorization(event):
     else:
         message = "Пользователи не найдены."
 
-    logging.info(f'Returned list of registrated users {event.sender_id}')
+    logging.info(f'Возвращен список зарегистрированных пользователей {event.sender_id}')
     await client.send_message(event.sender_id, message)
 
     async with client.conversation(event.sender_id) as conv:
@@ -104,7 +109,7 @@ async def authorization(event):
         login = await conv.get_response()
         if login.text not in usernames:
             await conv.send_message('Неверный логин. Попробуйте другой.')
-            logging.info(f'Attempted authorization with not existing username: {login.text}')
+            logging.info(f'Попытка авторизации с незарегистрированным логином: {login.text}')
         else:
             hashed_password = get_hashed_password(login.text)
             if hashed_password:
@@ -121,7 +126,7 @@ async def authorization(event):
                         else:
                             await conv.send_message('Пользователь не найден в базе данных.')
                 except Exception as e:
-                    logging.error(f"Error inserting session for username {login.text}: {e}")
+                    logging.error(f"Ошибка вставка сессии в бд для логина: {login.text}: {e}")
                     await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
 
             else:
