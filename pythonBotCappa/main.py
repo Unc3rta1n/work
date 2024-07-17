@@ -1,9 +1,11 @@
 import logging
 import configparser
 import bcrypt
+import re
 from telethon import TelegramClient, events
 from createdb import User, Sessions
-from sqlalchemy.orm import Session, sessionmaker
+from cappa_selenium import CappaAuth, CappaReg
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -16,7 +18,7 @@ logging.basicConfig(level=logging.INFO, handlers=[console_handler])
 config = configparser.ConfigParser()  # создаём объект парсера
 config.read("settings.ini")  # читаем конфиг
 
-# Получаем данные из конфигурации
+# Получаем данные из конфигурационного файла
 username = config["SQLAlchemy"]["username"]
 password = config["SQLAlchemy"]["password"]
 db_name = config["SQLAlchemy"]["db_name"]
@@ -41,6 +43,12 @@ async def start(event):
     logging.info(f'Команда /start получена от {event.sender_id}')
 
 
+# Функция, проверяющая валидность введенной почты
+def is_valid_email(email: str) -> bool:
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
+
 # Обработчик для команды /registrate
 @client.on(events.NewMessage(pattern='/registrate'))
 async def registrate(event):
@@ -56,9 +64,26 @@ async def registrate(event):
                         await conv.send_message('Этот логин уже существует. Попробуйте другой.')
                         logging.info(f'Попытка регистрации с уже существующим логином: {login.text}')
                     else:
-                        await conv.send_message('Введите ваш пароль:')
-                        user_password = await conv.get_response()
+                        while True:
+                            await conv.send_message('Введите  почту:')
+                            email = await conv.get_response()
+                            if is_valid_email(email.text):
+                                break
 
+                        await conv.send_message('Введите имя:')
+                        f_name = await conv.get_response()  # тут пофиг на имя, никаких проверок на сайте нет
+                        await conv.send_message('Введите фамилию:')
+                        l_name = await conv.get_response()  # тут пофиг на фамилию, никаких проверок на сайте нет
+
+                        # сюда еще надо прикрутить ввод имени фамилии, почты(можно регулярку прикрутить)
+                        # и прикрутить селениум
+                        await conv.send_message('Введите ваш пароль:')
+                        user_password = await conv.get_response()  # тут пароль должен быть больше 5 символов
+                        cappa = CappaReg(login.text, user_password.text, email.text, f_name.text, l_name.text)
+                        value = cappa.registrate()
+                        if not value:
+                            conv.send_message(f"чето пошло не так, ошибка при регистрации")
+                            raise Exception("Здесь будет возвращается то что пишет на сайте")
                         new_user = User(username=login.text)
                         new_user.set_password(user_password.text)
                         db.add(new_user)
@@ -134,13 +159,18 @@ async def authorization(event):
                             await conv.send_message(f'Неверный пароль от пользователя {login.text}')
                     try:
                         await conv.send_message(f'Пароли совпали, делаю авторизацию пользователя {login.text}')
+                        cappa = CappaAuth(login.text, user_password.text)
+                        value = cappa.authorizate()
+                        if not value:
+                            await conv.send_message(f'Произошла какая то ошибка, какая известно но только в логах(')
+                            raise Exception("Здесь будет возвращается то что пишет на сайте")
                         with Sessionlocal() as db:
                             user = db.query(User).filter_by(username=login.text).first()
                             if user:
                                 new_sess = Sessions(user_id=user.id)
                                 db.add(new_sess)
                                 db.commit()
-                                await conv.send_message('Допустим зашли в аккаунт, отметили в базе данных')
+                                await conv.send_message('Авторизация прошла успешно!')
                                 break
                             else:
                                 await conv.send_message('Пользователь не найден в базе данных.')

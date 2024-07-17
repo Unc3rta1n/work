@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, relationship, Session
+from sqlalchemy.orm import DeclarativeBase, relationship
 import configparser
 from sqlalchemy.sql import func
 import bcrypt
@@ -37,8 +37,8 @@ config = configparser.ConfigParser()  # создаём объект парсер
 config.read("settings.ini")  # читаем конфиг
 
 # Получаем данные из конфигурации
-username = config["SQLAlchemy"]["username"].strip('"')
-password = config["SQLAlchemy"]["password"].strip('"')
+username = config["SQLAlchemy"]["username"]
+password = config["SQLAlchemy"]["password"]
 # убираем одни кавычки, иначе строка получается в двойных кавычках
 
 # Создаем строку подключения с использованием f-строки

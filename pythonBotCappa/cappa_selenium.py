@@ -1,4 +1,3 @@
-
 from selenium.webdriver import Edge, EdgeOptions
 from selenium.webdriver.common.by import By
 import time
@@ -30,24 +29,22 @@ class CappaReg(Cappa):
         self.first_name = first_name
         self.last_name = last_name
 
-    def registrate(self):
+    def registrate(self) -> bool:
         try:
             with Edge(options=self.options) as driver:
                 driver.get(self.url)
-                time.sleep(2)  # wait for page to load
-                driver.save_screenshot('step1_initial_load.png')
+                time.sleep(2)
 
                 cappa_button = driver.find_element(By.XPATH, '/html/body/div/div[1]/div/div[3]/div/a')
                 cappa_button.click()
-                time.sleep(2)  # wait for the next page to load
-                driver.save_screenshot('step2_after_first_click.png')
+                time.sleep(2)
                 # Перешли на  https://cappa.csu.ru/auth/signin/
+
                 cappa_button = driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/div/form/a')
                 cappa_button.click()
                 time.sleep(2)  # wait for the next page to load
-                driver.save_screenshot('step3_after_second_click.png')
-                # Перешли на https://cappa.csu.ru/auth/signup/
 
+                # Перешли на https://cappa.csu.ru/auth/signup/
                 fields = {
                     '//*[@id="id_username"]': self.username,
                     '//*[@id="id_email"]': self.email,
@@ -66,27 +63,66 @@ class CappaReg(Cappa):
                 cappa_button = driver.find_element(By.XPATH,
                                                    '/html/body/div/main/div/div[2]/div/form/input[3]')
                 cappa_button.click()
-                time.sleep(2)  # wait for the next page to load
-                driver.save_screenshot('step10_after_registration_click.png')
+                time.sleep(2)
+
                 if driver.current_url == 'https://cappa.csu.ru/':
                     print(f'Пользователь с логином {self.username} успешно зарегистрирован')
+                    return True
                 else:
-                    print(f'Произошла какая-то ошибка')
                     cappa_error = driver.find_element(By.XPATH,
                                                       '/html/body/div/main/div/div[2]/div/form/small/ul/li')
                     print(cappa_error.text)
+                    return False
 
         except Exception as e:
             print(f"Ошибка при регистрации: {e}")
+            return False
 
-    def authorizate(self):
+
+class CappaAuth(Cappa):
+    def __init__(self, username: str, password: str):
+        super().__init__()
+        self.username = username
+        self.password = password
+
+    def authorizate(self) -> bool:  # сюда хочется какую то структуру, чтобы еще описание ошибки выводить
         try:
             with Edge(options=self.options) as driver:
                 driver.get(self.url)
+                time.sleep(2)
+
+                cappa_button = driver.find_element(By.XPATH, '/html/body/div/div[1]/div/div[3]/div/a')
+                cappa_button.click()
+                time.sleep(2)
+                # Перешли на  https://cappa.csu.ru/auth/signin/
+                cappa_text_field = driver.find_element(By.XPATH, '//*[@id="id_login"]')
+                cappa_text_field.click()
+                cappa_text_field.send_keys(self.username)
+                cappa_text_field = driver.find_element(By.XPATH, '//*[@id="id_password"]')
+                cappa_text_field.click()
+                cappa_text_field.send_keys(self.password)
+
+                cappa_button = driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/div/form/input[5]')
+                cappa_button.click()
+
+                time.sleep(2)
+
+                if driver.current_url == 'https://cappa.csu.ru/':
+                    print(f'Пользователь с логином {self.username} успешно авторизован')
+                    return True
+                else:
+                    cappa_error = driver.find_element(By.XPATH,
+                                                      '/html/body/div/main/div/div[2]/div/form/small')
+                    print(cappa_error.text)
+                    return False
 
         except Exception as e:
-            print(f"Ошибка при авторизации: {e}")
+            print(f"Произошла какая то ошибка: {e}")
+            return False
 
 
-Cappa = CappaReg('sakldadkl123akdlsajkldasjkldasd', '123', 'dsaddsa11dsa@ya.ru', 'sdadsadsa', 'daadsdasadsdas')
-Cappa.registrate()
+# Cappa = CappaReg('123asdghj', '123qweasd', 'd11saddsa11dsa@ya.ru', 'sdadsadsa', 'daadsdasadsdas')
+# Cappa.registrate()
+
+# Cappa = CappaAuth('123asdghj', "5")
+# Cappa.authorizate()
