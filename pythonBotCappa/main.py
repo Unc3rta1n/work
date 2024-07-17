@@ -2,7 +2,7 @@ import logging
 import configparser
 import bcrypt
 import re
-from telethon import TelegramClient, events
+from telethon import TelegramClient, events, Button
 from createdb import User, Sessions
 from cappa_selenium import CappaAuth, CappaReg
 from sqlalchemy.orm import sessionmaker
@@ -39,7 +39,7 @@ client = TelegramClient('bot', int(config["Telethon"]["api_id"]), config["Teleth
 @client.on(events.NewMessage(pattern='/start'))
 async def start(event):
     await event.respond('Привет я Каппа_бот. Ты хочешь зарегистрироваться(/registrate) или зайти в аккаунт('
-                        '/authorization)?')
+                        '/authorizate)?')
     logging.info(f'Команда /start получена от {event.sender_id}')
 
 
@@ -122,24 +122,20 @@ def get_hashed_password(login: str) -> str | None:
         return None
 
 
-# Обработчик для команды /authorization
-@client.on(events.NewMessage(pattern="/authorization"))
+# Обработчик для команды /authorizate
+@client.on(events.NewMessage(pattern="/authorizate"))
 async def authorization(event):
-    logging.info(f'Authorization command received from {event.sender_id}')
+    logging.info(f'Authorizate command received from {event.sender_id}')
     usernames = get_all_usernames()
     if usernames:
-        message = "Список пользователей:\n" + "\n".join(usernames)
+        buttons = [[Button.inline(user_name, data=user_name)] for user_name in usernames]
+        await event.respond('Выберите пользователя:', buttons=buttons)
     else:
-        message = "Пользователи не найдены."
-
-    logging.info(f'Возвращен список зарегистрированных пользователей {event.sender_id}')
-    await client.send_message(event.sender_id, message)
+        await event.respond("Пользователи не найдены.")
+        return
+    # await event.respond("Text", buttons=Button.clear()) волшебная вещь для удаления кнопок reply_keyboard
 
     async with client.conversation(event.sender_id) as conv:
-
-        message = "Выберите логин:"
-        # тут кнопочками в чате хочется логины доступные сделать...
-        await conv.send_message(message)
         while True:
             login = await conv.get_response()
             if login.text not in usernames:
@@ -151,35 +147,32 @@ async def authorization(event):
                     while True:
                         await conv.send_message(f'Введите пароль от пользователя: {login.text}')
                         user_password = await conv.get_response()
-                        hashed_user_password = bcrypt.hashpw(user_password.text.encode('utf-8'), bcrypt.gensalt())
-                        hashed_user_password = hashed_user_password.decode('utf-8')
                         if bcrypt.checkpw(user_password.text.encode('utf-8'), hashed_password.encode('utf-8')):
-                            break
+                            try:
+                                await conv.send_message(f'Пароли совпали, делаю авторизацию пользователя {login.text}')
+                                cappa = CappaAuth(login.text, user_password.text)
+                                value = cappa.authorizate()
+                                if not value:
+                                    await conv.send_message('Произошла какая-то ошибка, проверьте логи.')
+                                    raise Exception("Здесь будет возвращается то что пишет на сайте")
+
+                                with Sessionlocal() as db:
+                                    user = db.query(User).filter_by(username=login.text).first()
+                                    if user:
+                                        new_sess = Sessions(user_id=user.id)
+                                        db.add(new_sess)
+                                        db.commit()
+                                        await conv.send_message('Авторизация прошла успешно!')
+                                        break
+                                    else:
+                                        await conv.send_message('Пользователь не найден в базе данных.')
+                            except Exception as e:
+                                logging.error(f"Ошибка вставка сессии в бд для логина: {login.text}: {e}")
+                                await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
                         else:
                             await conv.send_message(f'Неверный пароль от пользователя {login.text}')
-                    try:
-                        await conv.send_message(f'Пароли совпали, делаю авторизацию пользователя {login.text}')
-                        cappa = CappaAuth(login.text, user_password.text)
-                        value = cappa.authorizate()
-                        if not value:
-                            await conv.send_message(f'Произошла какая то ошибка, какая известно но только в логах(')
-                            raise Exception("Здесь будет возвращается то что пишет на сайте")
-                        with Sessionlocal() as db:
-                            user = db.query(User).filter_by(username=login.text).first()
-                            if user:
-                                new_sess = Sessions(user_id=user.id)
-                                db.add(new_sess)
-                                db.commit()
-                                await conv.send_message('Авторизация прошла успешно!')
-                                break
-                            else:
-                                await conv.send_message('Пользователь не найден в базе данных.')
-                    except Exception as e:
-                        logging.error(f"Ошибка вставка сессии в бд для логина: {login.text}: {e}")
-                        await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
-
                 else:
-                    await conv.send_message('Пароль от пользователя не найден в базе данных .')
+                    await conv.send_message('Пароль от пользователя не найден в базе данных.')
 
 
 # Start the client
