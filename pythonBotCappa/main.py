@@ -126,8 +126,9 @@ async def registrate(event):
 
             except Exception as e:
                 logging.error(f"Ошибка при регистрации пользователя : {login.text}: {e}")
+                user_states[user_id] = ''
+                return
                 # await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
-    user_states[user_id] = ''
 
 
 # Функция, возвращающая список зарегистрированных пользователей
@@ -167,53 +168,66 @@ async def authorization(event):
 
     logging.info(f'Команда /authorizate получена от {event.sender_id}')
     # await event.respond("Text", buttons=Button.clear()) волшебная вещь для удаления кнопок reply_keyboard
-
-    async with client.conversation(event.sender_id) as conv:
-        usernames = get_all_usernames()
-        if usernames:
-            # buttons = [[Button.inline(user_name, data=user_name)] for user_name in usernames]
-            message = "Список пользователей:\n" + "\n".join(usernames)
-            await event.respond(message)
-        else:
-            await event.respond("Пользователи не найдены.")
-            return
-        while True:
-            await conv.send_message('Введите логин:')
-            login = await conv.get_response()
-            if login.text not in usernames:
-                await conv.send_message('Неверный логин. Попробуйте другой.')
-                logging.info(f'Попытка авторизации с незарегистрированным логином: {login.text}')
+    try:
+        async with client.conversation(event.sender_id) as conv:
+            usernames = get_all_usernames()
+            if usernames:
+                # buttons = [[Button.inline(user_name, data=user_name)] for user_name in usernames]
+                message = "Список пользователей:\n" + "\n".join(usernames)
+                await event.respond(message)
             else:
-                hashed_password = get_hashed_password(login.text)
-                if hashed_password:
-                    while True:
-                        await conv.send_message(f'Введите пароль от пользователя: {login.text}')
-                        user_password = await conv.get_response()
-                        if bcrypt.checkpw(user_password.text.encode('utf-8'), hashed_password.encode('utf-8')):
-                            try:
-                                await conv.send_message(f'Пароли совпали, делаю авторизацию пользователя {login.text}')
-                                cappa = CappaAuth(login.text, user_password.text)
-                                value = cappa.authorizate()
-                                if value:
-                                    await conv.send_message(value)
-                                    raise Exception(value)
-
-                                with Sessionlocal() as db:
-                                    user = db.query(User).filter_by(username=login.text).first()
-                                    if user:
-                                        new_sess = Sessions(user_id=user.id)
-                                        db.add(new_sess)
-                                        db.commit()
-                                        await conv.send_message('Авторизация прошла успешно!')
-                                        break
-                                    else:
-                                        await conv.send_message('Пользователь не найден в базе данных.')
-                            except Exception as e:
-                                logging.error(f"Ошибка при авторизации пользователя: {login.text}: {e}")
-                        else:
-                            await conv.send_message(f'Неверный пароль от пользователя {login.text}')
+                await event.respond("Пользователи не найдены.")
+                return
+            while True:
+                while True:
+                    await conv.send_message('Введите логин:')
+                    login = await conv.get_response()
+                    if '/' in login.text:
+                        await conv.send_message(
+                            'Логин не должен содержать символ "/". Пожалуйста, попробуйте другой логин.')
+                    else:
+                        break
+                if login.text not in usernames:
+                    await conv.send_message('Неверный логин. Попробуйте другой.')
+                    logging.info(f'Попытка авторизации с незарегистрированным логином: {login.text}')
                 else:
-                    await conv.send_message('Пароль от пользователя не найден в базе данных.')
+                    hashed_password = get_hashed_password(login.text)
+                    if hashed_password:
+                        while True:
+                            await conv.send_message(f'Введите пароль от пользователя: {login.text}')
+                            user_password = await conv.get_response()
+                            if bcrypt.checkpw(user_password.text.encode('utf-8'), hashed_password.encode('utf-8')):
+                                try:
+                                    await conv.send_message(f'Пароли совпали, делаю авторизацию пользователя {login.text}')
+                                    cappa = CappaAuth(login.text, user_password.text)
+                                    value = cappa.authorizate()
+                                    if value:
+                                        await conv.send_message(value)
+                                        raise Exception(value)
+
+                                    with Sessionlocal() as db:
+                                        user = db.query(User).filter_by(username=login.text).first()
+                                        if user:
+                                            new_sess = Sessions(user_id=user.id)
+                                            db.add(new_sess)
+                                            db.commit()
+                                            await conv.send_message('Авторизация прошла успешно!')
+                                            break
+                                        else:
+                                            await conv.send_message('Пользователь не найден в базе данных.')
+                                except Exception as e:
+                                    logging.error(f"Ошибка при авторизации пользователя: {login.text}: {e}")
+                                    user_states[user_id] = ''
+                                    return
+                            else:
+                                await conv.send_message(f'Неверный пароль от пользователя {login.text}')
+                    else:
+                        await conv.send_message('Пароль от пользователя не найден в базе данных.')
+    except Exception as e:
+        logging.error(f"Ошибка при авторизации пользователя: {login.text}: {e}")
+        user_states[user_id] = ''
+        return
+
     user_states[user_id] = ''
 
 # Start the client
