@@ -34,11 +34,13 @@ class CappaAuth(Cappa):
 
                 if driver.current_url == 'https://cappa.csu.ru/':
                     print(f'Пользователь с логином {self.username} успешно авторизован')
+                    driver.quit()
                     return None
                 else:
                     cappa_error = driver.find_element(By.XPATH,
                                                       '/html/body/div/main/div/div[2]/div/form/small')
                     print(cappa_error.text)
+                    driver.quit()
                     return cappa_error.text
 
         except Exception as e:
