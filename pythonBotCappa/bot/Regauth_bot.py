@@ -4,23 +4,12 @@ import re
 from telethon import TelegramClient, events, Button
 from selenium_.Cappa_reg import CappaReg
 from selenium_.Cappa_auth import CappaAuth
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
-from utils.setting import *
+from utils.setting import get_config
 from database.models import Sessions, User
+from database.session import *
+
 config = get_config()
 
-# Получаем данные из конфигурационного файла
-username = config["SQLAlchemy"]["username"]
-password = config["SQLAlchemy"]["password"]
-db_name = config["SQLAlchemy"]["db_name"]
-
-# Создаем строку подключения с использованием f-строки
-connection_string = f"postgresql://{username}:{password}@localhost/{db_name}"
-
-# Запускаем движок и создаем сессию
-engine = create_engine(connection_string, echo=False)
-Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Создать клиент телеграм-бота
 client = TelegramClient('', int(config["Telethon"]["api_id"]), config["Telethon"]["api_hash"]).start(
@@ -223,5 +212,3 @@ async def authorization(event):
         return
 
     user_states[user_id] = ''
-
-
