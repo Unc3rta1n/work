@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship
-import configparser
+from database.session import engine
 from sqlalchemy.sql import func
 import bcrypt
 
@@ -33,17 +33,14 @@ class Sessions(Base):
     user = relationship("User", back_populates="sessions")
 
 
-config = configparser.ConfigParser()  # создаём объект парсера
-config.read("settings.ini")  # читаем конфиг
+# Таблица для второго бота, будет хранить sender_id
+# которые ему хотя бы раз написали /start и при каждом реге\логине будет кидать уведы всем
+class Notifications(Base):
+    __tablename__ = "notifications"
 
-# Получаем данные из конфигурации
-username = config["SQLAlchemy"]["username"]
-password = config["SQLAlchemy"]["password"]
-# убираем одни кавычки, иначе строка получается в двойных кавычках
+    id = Column(Integer, primary_key=True, index=True)
+    sender_id = Column(String, unique=True, nullable=False)
 
-# Создаем строку подключения с использованием f-строки
-connection_string = f"postgresql://{username}:{password}@localhost/Cappa_bot"
-engine = create_engine(connection_string)
 
 # создаем таблицы
 Base.metadata.create_all(bind=engine)
