@@ -1,10 +1,11 @@
 import logging
 import bcrypt
 import re
+import asyncio
+import datetime
 from telethon import TelegramClient, events, Button
 from selenium_.Cappa_reg import CappaReg
 from selenium_.Cappa_auth import CappaAuth
-from utils.setting import get_config
 from database.models import Sessions, User
 from database.session import *
 
@@ -12,7 +13,7 @@ config = get_config()
 
 
 # Создать клиент телеграм-бота
-client = TelegramClient('', int(config["Telethon"]["api_id"]), config["Telethon"]["api_hash"]).start(
+client = TelegramClient('321', int(config["Telethon"]["api_id"]), config["Telethon"]["api_hash"]).start(
     bot_token=config["Telethon"]["bot_token"])
 
 # Словарь для отслеживания состояния пользователей
@@ -195,7 +196,8 @@ async def authorization(event):
                                             db.add(new_sess)
                                             db.commit()
                                             await conv.send_message('Авторизация прошла успешно!')
-                                            break
+                                            return
+
                                         else:
                                             await conv.send_message('Пользователь не найден в базе данных.')
                                 except Exception as e:
