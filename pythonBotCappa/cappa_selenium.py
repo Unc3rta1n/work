@@ -22,7 +22,7 @@ class CappaReg(Cappa):
     """Класс для регистрации пользователя на сайте cappa.csu.ru"""
 
     def __init__(self, username: str, password: str, email: str, first_name: str, last_name: str):
-        super().__init__()  # Вызовите __init__ базового класса
+        super().__init__()
         self.username = username
         self.password = password
         self.email = email
@@ -79,6 +79,7 @@ class CappaReg(Cappa):
 
 
 class CappaAuth(Cappa):
+    """Класс для авторизации пользователя на сайте cappa.csu.ru"""
     def __init__(self, username: str, password: str):
         super().__init__()
         self.username = username
@@ -97,6 +98,7 @@ class CappaAuth(Cappa):
                 cappa_text_field = driver.find_element(By.XPATH, '//*[@id="id_login"]')
                 cappa_text_field.click()
                 cappa_text_field.send_keys(self.username)
+
                 cappa_text_field = driver.find_element(By.XPATH, '//*[@id="id_password"]')
                 cappa_text_field.click()
                 cappa_text_field.send_keys(self.password)
