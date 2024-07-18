@@ -88,16 +88,20 @@ async def registrate(event):
                         await conv.send_message('Введите фамилию:')
 
                         l_name = await conv.get_response()  # тут пофиг на фамилию, никаких проверок на сайте нет
-
-                        await conv.send_message('Введите ваш пароль:')
-                        user_password = await conv.get_response()  # тут пароль должен быть больше 5 символов
+                        while True:
+                            await conv.send_message('Введите ваш пароль(больше 5 символов):')
+                            user_password = await conv.get_response()  # тут пароль должен быть больше 5 символов
+                            if len(user_password.text) <= 5:
+                                await conv.send_message('Слабый пароль!')
+                            else:
+                                break
 
                         cappa = CappaReg(login.text, user_password.text, email.text, f_name.text, l_name.text)
                         value = cappa.registrate()
 
-                        if not value:
-                            conv.send_message(f"чето пошло не так, ошибка при регистрации")
-                            raise Exception("Здесь будет возвращается то что пишет на сайте")
+                        if value:
+                            await conv.send_message(value)
+                            raise Exception(value)
 
                         new_user = User(username=login.text)
                         new_user.set_password(user_password.text)
@@ -111,7 +115,7 @@ async def registrate(event):
             except Exception as e:
                 logging.error(f"Ошибка при регистрации пользователя в базу данных: {login.text}: {e}")
                 await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
-
+    user_states[user_id] = ''
 
 # Функция, возвращающая список зарегистрированных пользователей
 def get_all_usernames() -> list:
@@ -177,9 +181,9 @@ async def authorization(event):
                                 await conv.send_message(f'Пароли совпали, делаю авторизацию пользователя {login.text}')
                                 cappa = CappaAuth(login.text, user_password.text)
                                 value = cappa.authorizate()
-                                if not value:
-                                    await conv.send_message('Произошла какая-то ошибка, проверьте логи.')
-                                    raise Exception("Здесь будет возвращается то что пишет на сайте")
+                                if value:
+                                    await conv.send_message(value)
+                                    raise Exception(value)
 
                                 with Sessionlocal() as db:
                                     user = db.query(User).filter_by(username=login.text).first()
@@ -193,12 +197,11 @@ async def authorization(event):
                                         await conv.send_message('Пользователь не найден в базе данных.')
                             except Exception as e:
                                 logging.error(f"Ошибка вставка сессии в бд для логина: {login.text}: {e}")
-                                await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
                         else:
                             await conv.send_message(f'Неверный пароль от пользователя {login.text}')
                 else:
                     await conv.send_message('Пароль от пользователя не найден в базе данных.')
-
+    user_states[user_id] = ''
 
 # Start the client
 client.start()

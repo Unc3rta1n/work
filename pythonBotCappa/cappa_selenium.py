@@ -29,7 +29,7 @@ class CappaReg(Cappa):
         self.first_name = first_name
         self.last_name = last_name
 
-    def registrate(self) -> bool:
+    def registrate(self) -> str | None:
         try:
             with Edge(options=self.options) as driver:
                 driver.get(self.url)
@@ -67,16 +67,15 @@ class CappaReg(Cappa):
 
                 if driver.current_url == 'https://cappa.csu.ru/':
                     print(f'Пользователь с логином {self.username} успешно зарегистрирован')
-                    return True
+                    return None
                 else:
                     cappa_error = driver.find_element(By.XPATH,
                                                       '/html/body/div/main/div/div[2]/div/form/small/ul/li')
-                    print(cappa_error.text)
-                    return False
+                    return cappa_error.text
 
         except Exception as e:
             print(f"Ошибка при регистрации: {e}")
-            return False
+            return 'Неотловленная ошибка произошла'
 
 
 class CappaAuth(Cappa):
@@ -85,7 +84,7 @@ class CappaAuth(Cappa):
         self.username = username
         self.password = password
 
-    def authorizate(self) -> bool:  # сюда хочется какую то структуру, чтобы еще описание ошибки выводить
+    def authorizate(self) -> str | None:  # сюда хочется какую то структуру, чтобы еще описание ошибки выводить
         try:
             with Edge(options=self.options) as driver:
                 driver.get(self.url)
@@ -109,16 +108,16 @@ class CappaAuth(Cappa):
 
                 if driver.current_url == 'https://cappa.csu.ru/':
                     print(f'Пользователь с логином {self.username} успешно авторизован')
-                    return True
+                    return None
                 else:
                     cappa_error = driver.find_element(By.XPATH,
                                                       '/html/body/div/main/div/div[2]/div/form/small')
                     print(cappa_error.text)
-                    return False
+                    return cappa_error.text
 
         except Exception as e:
             print(f"Произошла какая то ошибка: {e}")
-            return False
+            return 'Неотловленная ошибка произошла'
 
 
 # Cappa = CappaReg('123asdghj', '123qweasd', 'd11saddsa11dsa@ya.ru', 'sdadsadsa', 'daadsdasadsdas')
