@@ -4,6 +4,7 @@ import time
 
 
 class Cappa:
+    """Базовый класс для селениума"""
     def __init__(self):
         self.url = "https://cappa.csu.ru/"
         self.options = EdgeOptions()

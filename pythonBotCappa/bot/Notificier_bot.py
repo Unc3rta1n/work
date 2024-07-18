@@ -74,7 +74,7 @@ async def check_new_registrations():
             else:
                 logging.info('Отправлено уведомление')
     except Exception as e:
-        print(f'Failed to send message : {e}')
+        print(f'Ошибка при обработке : {e}')
 
     # Обновляем время последней проверки
     last_time_check = datetime.now()

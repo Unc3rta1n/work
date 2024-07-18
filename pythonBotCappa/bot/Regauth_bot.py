@@ -92,6 +92,7 @@ async def registrate(event):
                                 break
 
                         cappa = CappaReg(login.text, user_password.text, email.text, f_name.text, l_name.text)
+                        logging.info(f'Селениум в работе')
                         value = cappa.registrate()
 
                         if value:
