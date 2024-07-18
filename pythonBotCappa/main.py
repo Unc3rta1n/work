@@ -41,8 +41,12 @@ user_states = {}
 # Обработчик для команды /start
 @client.on(events.NewMessage(pattern='/start'))
 async def start(event):
-    await event.respond('Привет я Каппа_бот. Ты хочешь зарегистрироваться(/registrate) или зайти в аккаунт('
-                        '/authorizate)?')
+    buttons = [
+        [Button.text('/registrate')],
+        [Button.text('/authorizate')]
+    ]
+    await event.respond('Привет я Каппа_бот. Ты хочешь зарегистрироваться(/registrate) или зайти в аккаунт(/authorizate)?',
+                        buttons=buttons)
     logging.info(f'Команда /start получена от {event.sender_id}')
 
 
@@ -65,8 +69,16 @@ async def registrate(event):
 
     async with client.conversation(event.sender_id) as conv:
         while True:
-            await conv.send_message('Введите ваш логин:')
-            login = await conv.get_response()
+            while True:
+                await conv.send_message('Введите ваш логин:')
+                logging.info(f'Команда /registrate получена от {event.sender_id}')
+                login = await conv.get_response()
+                if '/' in login.text:
+                    await conv.send_message(
+                        'Логин не должен содержать символ "/". Пожалуйста, попробуйте другой логин.')
+                else:
+                    break
+
             try:
                 with Sessionlocal() as db:
                     user_data = db.query(User).filter_by(username=login.text).first()
@@ -113,9 +125,10 @@ async def registrate(event):
                         break
 
             except Exception as e:
-                logging.error(f"Ошибка при регистрации пользователя в базу данных: {login.text}: {e}")
-                await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
+                logging.error(f"Ошибка при регистрации пользователя : {login.text}: {e}")
+                # await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
     user_states[user_id] = ''
+
 
 # Функция, возвращающая список зарегистрированных пользователей
 def get_all_usernames() -> list:
@@ -196,7 +209,7 @@ async def authorization(event):
                                     else:
                                         await conv.send_message('Пользователь не найден в базе данных.')
                             except Exception as e:
-                                logging.error(f"Ошибка вставка сессии в бд для логина: {login.text}: {e}")
+                                logging.error(f"Ошибка при авторизации пользователя: {login.text}: {e}")
                         else:
                             await conv.send_message(f'Неверный пароль от пользователя {login.text}')
                 else:
