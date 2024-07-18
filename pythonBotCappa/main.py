@@ -34,6 +34,9 @@ Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 client = TelegramClient('bot', int(config["Telethon"]["api_id"]), config["Telethon"]["api_hash"]).start(
     bot_token=config["Telethon"]["bot_token"])
 
+# Словарь для отслеживания состояния пользователей
+user_states = {}
+
 
 # Обработчик для команды /start
 @client.on(events.NewMessage(pattern='/start'))
@@ -52,10 +55,17 @@ def is_valid_email(email: str) -> bool:
 # Обработчик для команды /registrate
 @client.on(events.NewMessage(pattern='/registrate'))
 async def registrate(event):
+    user_id = event.sender_id
+    if user_states.get(user_id) not in [None, '']:
+        await event.respond("Вы уже выполняете другую команду. Завершите её перед началом новой.")
+        return
+    user_states[user_id] = 'registering'
+
+    logging.info(f'Команда /registrate получена от {event.sender_id}')
+
     async with client.conversation(event.sender_id) as conv:
         while True:
             await conv.send_message('Введите ваш логин:')
-            logging.info(f'Команда /registrate получена от {event.sender_id}')
             login = await conv.get_response()
             try:
                 with Sessionlocal() as db:
@@ -69,28 +79,35 @@ async def registrate(event):
                             email = await conv.get_response()
                             if is_valid_email(email.text):
                                 break
+                            else:
+                                await conv.send_message('Ошибка в почте!')
 
                         await conv.send_message('Введите имя:')
+
                         f_name = await conv.get_response()  # тут пофиг на имя, никаких проверок на сайте нет
                         await conv.send_message('Введите фамилию:')
+
                         l_name = await conv.get_response()  # тут пофиг на фамилию, никаких проверок на сайте нет
 
-                        # сюда еще надо прикрутить ввод имени фамилии, почты(можно регулярку прикрутить)
-                        # и прикрутить селениум
                         await conv.send_message('Введите ваш пароль:')
                         user_password = await conv.get_response()  # тут пароль должен быть больше 5 символов
+
                         cappa = CappaReg(login.text, user_password.text, email.text, f_name.text, l_name.text)
                         value = cappa.registrate()
+
                         if not value:
                             conv.send_message(f"чето пошло не так, ошибка при регистрации")
                             raise Exception("Здесь будет возвращается то что пишет на сайте")
+
                         new_user = User(username=login.text)
                         new_user.set_password(user_password.text)
                         db.add(new_user)
                         db.commit()
+
                         await conv.send_message('Вы успешно зарегистрированы!')
                         logging.info(f'Пользователь {login.text} успешно зарегистрирован.')
                         break
+
             except Exception as e:
                 logging.error(f"Ошибка при регистрации пользователя в базу данных: {login.text}: {e}")
                 await conv.send_message('Произошла ошибка при попытке записи в базу данных.')
@@ -125,18 +142,26 @@ def get_hashed_password(login: str) -> str | None:
 # Обработчик для команды /authorizate
 @client.on(events.NewMessage(pattern="/authorizate"))
 async def authorization(event):
-    logging.info(f'Authorizate command received from {event.sender_id}')
-    usernames = get_all_usernames()
-    if usernames:
-        buttons = [[Button.inline(user_name, data=user_name)] for user_name in usernames]
-        await event.respond('Выберите пользователя:', buttons=buttons)
-    else:
-        await event.respond("Пользователи не найдены.")
+    user_id = event.sender_id
+    if user_states.get(user_id) not in [None, '']:
+        await event.respond("Вы уже выполняете другую команду. Завершите её перед началом новой.")
         return
+    user_states[user_id] = 'authorizing'
+
+    logging.info(f'Команда /authorizate получена от {event.sender_id}')
     # await event.respond("Text", buttons=Button.clear()) волшебная вещь для удаления кнопок reply_keyboard
 
     async with client.conversation(event.sender_id) as conv:
+        usernames = get_all_usernames()
+        if usernames:
+            # buttons = [[Button.inline(user_name, data=user_name)] for user_name in usernames]
+            message = "Список пользователей:\n" + "\n".join(usernames)
+            await event.respond(message)
+        else:
+            await event.respond("Пользователи не найдены.")
+            return
         while True:
+            await conv.send_message('Введите логин:')
             login = await conv.get_response()
             if login.text not in usernames:
                 await conv.send_message('Неверный логин. Попробуйте другой.')
