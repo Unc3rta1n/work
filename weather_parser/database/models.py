@@ -5,6 +5,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from utils.setting import get_config
 
+engine = 0
+
 
 class Base(DeclarativeBase):
     pass
@@ -40,6 +42,7 @@ class CityWeather(Base):
 
 def init_database():
     """Функция для подключения к базе"""
+    global engine
     config = get_config()
     db_user = config["SQLAlchemy"]["db_user"]
     db_pass = config["SQLAlchemy"]["db_pass"]
