@@ -69,8 +69,7 @@ def save_data(weather_data: dict, city_name: str):
 
     except Exception as e:
         logging.error(f"Exception: {e}")
-    pass
-    # todo: здесь надо закидывать в базу данных информацию о погоде
+
 
 
 def get_data():
