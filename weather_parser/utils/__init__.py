@@ -6,3 +6,4 @@ console_handler = logging.StreamHandler()
 console_handler.setFormatter(formatter)
 
 logging.basicConfig(level=logging.INFO, handlers=[console_handler])
+
