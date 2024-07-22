@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from fastapi_weather.schemas import *
 from parser.parser import *
+
 app = FastAPI(title="Weather Parsing")
 
 
@@ -26,3 +26,8 @@ async def add_city(city_name: str) -> DefaultResponse:
     response = await add_city_to_parsing(city_name)
     return response
 
+
+@app.get("/weather/view_all", response_model=DefaultResponse)
+async def view_all_weather():
+    response = await get_all_weather_from_db()
+    return response
