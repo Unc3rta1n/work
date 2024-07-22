@@ -118,16 +118,18 @@ async def get_weather_from_db(city_name: str) -> DefaultResponse:
         logging.error(f'Произошла ошибка при поиске/вытягивании данных из базы данных')
 
 
-async def add_city_to_parsing(city_name: str):
+async def add_city_to_parsing(city_name: str) -> DefaultResponse:
     try:
         logging.info(f"Добавляем город {city_name} в БД")
         with Sessionlocal() as db:
             city = City(city_name=city_name)
             db.add(city)
             db.commit()
+            return DefaultResponse(error=False, message='Ok', payload=None)
 
     except Exception as e:
         logging.error(f"Ошибка при добавлении города в базу данных, {e}")
+        return DefaultResponse(error=True, message=' Not Ok', payload=None)
 
 
 async def remove_city_from_parsing(city_name: str) -> DefaultResponse:

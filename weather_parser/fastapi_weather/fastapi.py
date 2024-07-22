@@ -21,3 +21,8 @@ async def delete_city(city_name: str) -> DefaultResponse:
     return response
 
 
+@app.post("/weather/add", response_model=DefaultResponse)
+async def add_city(city_name: str) -> DefaultResponse:
+    response = await add_city_to_parsing(city_name)
+    return response
+
