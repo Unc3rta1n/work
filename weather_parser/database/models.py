@@ -5,8 +5,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from utils.setting import get_config
 
-engine = 0
-
 
 class Base(DeclarativeBase):
     pass
@@ -40,17 +38,15 @@ class CityWeather(Base):
     cities = relationship('City')
 
 
-def init_database():
-    """Функция для подключения к базе"""
-    global engine
-    config = get_config()
-    db_user = config["SQLAlchemy"]["db_user"]
-    db_pass = config["SQLAlchemy"]["db_pass"]
-    db_name = config["SQLAlchemy"]["db_name"]
-    db_host = config["SQLAlchemy"]["db_host"]
-    db_port = config["SQLAlchemy"]["db_port"]
+config = get_config()
+db_user = config["SQLAlchemy"]["db_user"]
+db_pass = config["SQLAlchemy"]["db_pass"]
+db_name = config["SQLAlchemy"]["db_name"]
+db_host = config["SQLAlchemy"]["db_host"]
+db_port = config["SQLAlchemy"]["db_port"]
 
-    connection_string = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
-    engine = create_engine(connection_string, echo=False)
-    Base.metadata.create_all(bind=engine)
-    # sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+connection_string = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+engine = create_engine(connection_string, echo=False)
+Base.metadata.create_all(bind=engine)
+Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+

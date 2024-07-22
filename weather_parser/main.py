@@ -1,8 +1,7 @@
 import utils
-from database.models import init_database
 from parser.parser import WeatherParser
+from parser.parser import get_data
 
-init_database()
-
-wp = WeatherParser(city_name='Челябинск')
-wp.parse()
+# wp = WeatherParser(city_name='Chelyabinsk')
+# wp.parse()
+get_data()
