@@ -14,7 +14,7 @@ class City(Base):
     """Класс-таблица для городов"""
     __tablename__ = "city"
     id = Column(Integer, primary_key=True, index=True)
-    city_name = Column(String, nullable=False)
+    city_name = Column(String, nullable=False, unique=True)
 
 
 class Weather(Base):

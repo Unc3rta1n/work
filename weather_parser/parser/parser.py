@@ -54,8 +54,9 @@ def save_data(weather_data: dict, city_name: str):
                 humidity=weather_data["humidity"],
                 wind=weather_data["wind"],
                 feeling=weather_data["feeling"],
-                date=datetime.now().date()
+                date=datetime.now()
             )
+            logging.info("Сохраняем информацию о погоде в БД")
             db.add(weather)
             db.flush()
             db.refresh(weather)
@@ -76,6 +77,7 @@ def get_data_for_all_cities():
         with Sessionlocal() as db:
             cities = db.query(City).all()
             for city in cities:
+                logging.info(city.city_name)
                 weather = WeatherParser(city_name=city.city_name)
                 data = weather.parse()
                 save_data(data, city.city_name)
@@ -85,6 +87,7 @@ def get_data_for_all_cities():
 
 def add_city_to_parsing(city_name: str):
     try:
+        logging.info(f"Добавляем город {city_name} в БД")
         with Sessionlocal() as db:
             city = City(city_name=city_name)
             db.add(city)
@@ -105,10 +108,8 @@ def remove_city_from_parsing(city_name: str):
                     if weather:
                         db.delete(weather)
                     db.delete(city_weather)
-                    db.delete(city_weather)
                 db.delete(city)
                 db.commit()
-
             else:
                 logging.warning(f"Город {city_name} не найден в базе данных")
     except Exception as e:
