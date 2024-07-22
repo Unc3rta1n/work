@@ -14,3 +14,10 @@ async def view_weather(city_name: str) -> DefaultResponse:
     response = await get_weather_from_db(city_name)
     return response
 
+
+@app.delete("/weather/delete", response_model=DefaultResponse)
+async def delete_city(city_name: str) -> DefaultResponse:
+    response = await remove_city_from_parsing(city_name)
+    return response
+
+

@@ -130,7 +130,7 @@ async def add_city_to_parsing(city_name: str):
         logging.error(f"Ошибка при добавлении города в базу данных, {e}")
 
 
-async def remove_city_from_parsing(city_name: str):
+async def remove_city_from_parsing(city_name: str) -> DefaultResponse:
     try:
         with Sessionlocal() as db:
             city = db.query(City).filter_by(city_name=city_name).first()
@@ -143,7 +143,10 @@ async def remove_city_from_parsing(city_name: str):
                     db.delete(city_weather)
                 db.delete(city)
                 db.commit()
+                return DefaultResponse(error=False, message='OK', payload=None)
             else:
                 logging.warning(f"Город {city_name} не найден в базе данных")
+                return DefaultResponse(error=True, message='NOT OK', payload=None)
+
     except Exception as e:
         logging.error(f"Ошибка при удалении города из базы данных, {e}")
