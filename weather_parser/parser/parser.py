@@ -71,7 +71,6 @@ def save_data(weather_data: dict, city_name: str):
         logging.error(f"Exception: {e}")
 
 
-
 def get_data():
     try:
         with Sessionlocal() as db:
