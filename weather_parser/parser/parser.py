@@ -71,7 +71,7 @@ def save_data(weather_data: dict, city_name: str):
         logging.error(f"Exception: {e}")
 
 
-def get_data():
+def get_data_for_all_cities():
     try:
         with Sessionlocal() as db:
             cities = db.query(City).all()
@@ -81,3 +81,37 @@ def get_data():
                 save_data(data, city.city_name)
     except Exception as e:
         logging.error(f"Exception:{e}")
+
+
+def add_city_to_parsing(city_name: str):
+    try:
+        with Sessionlocal() as db:
+            city = City(city_name=city_name)
+            db.add(city)
+            db.commit()
+
+    except Exception as e:
+        logging.error(f"Ошибка при добавлении города в базу данных, {e}")
+
+
+def remove_city_from_parsing(city_name: str):
+    try:
+        with Sessionlocal() as db:
+            city = db.query(City).filter_by(city_name=city_name).first()
+            if city:
+                city_weathers = db.query(CityWeather).filter_by(city_id=city.id).all()
+                for city_weather in city_weathers:
+                    weather = db.query(Weather).filter_by(id=city_weather.weather_id).first()
+                    if weather:
+                        db.delete(weather)
+                    db.delete(city_weather)
+                    db.delete(city_weather)
+                db.delete(city)
+                db.commit()
+
+            else:
+                logging.warning(f"Город {city_name} не найден в базе данных")
+    except Exception as e:
+        logging.error(f"Ошибка при удалении города из базы данных, {e}")
+
+
