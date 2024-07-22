@@ -5,6 +5,7 @@ from database.models import *
 from datetime import datetime
 import requests
 from database.models import Sessionlocal
+from fastapi_weather.schemas import *
 
 config = get_config()
 api_token = config["OpenWeather"]["api_token"]
@@ -45,7 +46,7 @@ class WeatherParser:
             return None
 
 
-def save_data(weather_data: dict, city_name: str):
+async def save_data(weather_data: dict, city_name: str):
     try:
         with Sessionlocal() as db:
             weather = Weather(
@@ -72,7 +73,7 @@ def save_data(weather_data: dict, city_name: str):
         logging.error(f"Exception: {e}")
 
 
-def get_data_for_all_cities():
+async def get_data_for_all_cities():
     try:
         with Sessionlocal() as db:
             cities = db.query(City).all()
@@ -80,12 +81,44 @@ def get_data_for_all_cities():
                 logging.info(city.city_name)
                 weather = WeatherParser(city_name=city.city_name)
                 data = weather.parse()
-                save_data(data, city.city_name)
+                await save_data(data, city.city_name)
     except Exception as e:
         logging.error(f"Exception:{e}")
 
 
-def add_city_to_parsing(city_name: str):
+async def get_weather_from_db(city_name: str) -> DefaultResponse:
+    logging.info(f'Ищем город {city_name} в базе данных')
+    result = []
+    try:
+        with Sessionlocal() as db:
+            city = db.query(City).filter_by(city_name=city_name).first()
+            if city:
+                city_weathers = db.query(CityWeather).filter_by(city_id=city.id).all()
+                for city_weather in city_weathers:
+                    weather = db.query(Weather).filter_by(id=city_weather.weather_id).first()
+                    weather_data = {"id": weather.id,
+                                    "temperature": weather.temperature,
+                                    "pressure": weather.pressure,
+                                    "humidity": weather.humidity,
+                                    "wind": weather.wind,
+                                    "feeling": weather.feeling,
+                                    "date": weather.date.strftime("%Y-%m-%d")
+                                    }
+                    result.append(weather_data)
+
+                if len(result):
+                    response = DefaultResponse(error=False, message="Ok",
+                                               payload=AllWeatherResponse(weather=result))
+                    return response
+            else:
+                logging.info(f"Город {city_name} не найден в базе данных")
+                return DefaultResponse(error=True, message='Город не найден в базе данных', payload=None)
+
+    except Exception as e:
+        logging.error(f'Произошла ошибка при поиске/вытягивании данных из базы данных')
+
+
+async def add_city_to_parsing(city_name: str):
     try:
         logging.info(f"Добавляем город {city_name} в БД")
         with Sessionlocal() as db:
@@ -97,7 +130,7 @@ def add_city_to_parsing(city_name: str):
         logging.error(f"Ошибка при добавлении города в базу данных, {e}")
 
 
-def remove_city_from_parsing(city_name: str):
+async def remove_city_from_parsing(city_name: str):
     try:
         with Sessionlocal() as db:
             city = db.query(City).filter_by(city_name=city_name).first()
@@ -114,5 +147,3 @@ def remove_city_from_parsing(city_name: str):
                 logging.warning(f"Город {city_name} не найден в базе данных")
     except Exception as e:
         logging.error(f"Ошибка при удалении города из базы данных, {e}")
-
-
