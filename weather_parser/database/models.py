@@ -49,4 +49,3 @@ connection_string = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_n
 engine = create_engine(connection_string, echo=False)
 Base.metadata.create_all(bind=engine)
 Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
