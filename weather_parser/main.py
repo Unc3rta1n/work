@@ -16,4 +16,4 @@ loop = asyncio.get_event_loop()
 loop.create_task(parse_data())
 
 
-# uvicorn.run(app, host="127.0.0.1", port=8001)  # прикол для дебага
+uvicorn.run(app, host="127.0.0.1", port=8001)  # прикол для дебага

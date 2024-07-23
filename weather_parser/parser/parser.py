@@ -2,7 +2,7 @@ import logging
 import requests
 
 from database.models import *
-from datetime import datetime
+from datetime import datetime, timedelta
 from database.models import Sessionlocal
 from fastapi_weather.schemas import *
 
@@ -179,7 +179,77 @@ async def remove_city_from_parsing(city_name: str) -> DefaultResponse:
                 return DefaultResponse(error=False, message='OK', payload=None)
             else:
                 logging.warning(f"Город {city_name} не найден в базе данных")
-                return DefaultResponse(error=True, message='NOT OK', payload=f"Город {city_name} не найден в базе данных")
+                return DefaultResponse(error=True, message='NOT OK',
+                                       payload=f"Город {city_name} не найден в базе данных")
 
     except Exception as e:
         logging.error(f"Ошибка при удалении города из базы данных, {e}")
+
+
+async def search_data(
+        city_name: str,
+        start_time: Optional[datetime] = None, end_time: Optional[datetime] = None,
+        limit: Optional[int] = None, offset: Optional[int] = None
+) -> DefaultResponse:
+    logging.info(f"Собираем информацию по городу {city_name} с необязательными параметрами")
+
+    # Устанавливаем значения по умолчанию
+    if start_time is None:
+        # start_time = datetime.combine(datetime.today() - timedelta(days=1), datetime.min.time())
+        start_time = datetime.combine(datetime.today(), datetime.min.time())
+
+    if end_time is None:
+        end_time = datetime.combine(datetime.today() + timedelta(days=1), datetime.min.time())
+    if limit is None:
+        limit = 10
+    if offset is None:
+        offset = 0
+
+    result = []
+    try:
+        with Sessionlocal() as db:
+
+            if city_name:
+                city = db.query(City).filter_by(city_name=city_name).first()
+                if city:
+                    # Запрос с фильтрацией по дате и пагинацией
+                    city_weathers = (
+                        db.query(CityWeather)
+                        .join(Weather, CityWeather.weather_id == Weather.id)
+                        .filter(
+                            CityWeather.city_id == city.id,
+                            Weather.date >= start_time,
+                            Weather.date <= end_time
+                        )
+                        .limit(limit)
+                        .offset(offset)
+                        .all()
+                    )
+
+                    for city_weather in city_weathers:
+                        weather = db.query(Weather).filter_by(id=city_weather.weather_id).first()
+                        weather_data = {
+                            "id": weather.id,
+                            "temperature": weather.temperature,
+                            "pressure": weather.pressure,
+                            "humidity": weather.humidity,
+                            "wind": weather.wind,
+                            "feeling": weather.feeling,
+                            "date": weather.date.strftime("%Y-%m-%d")
+                        }
+                        result.append(weather_data)
+
+                else:
+                    logging.info(f"Город {city_name} не найден в базе данных")
+                    return DefaultResponse(error=True, message='Город не найден в базе данных', payload=None)
+
+            else:
+                logging.info("Имя города не указано")
+                return DefaultResponse(error=True, message='Имя города обязательно', payload=None)
+
+            # Возвращаем отфильтрованный результат с учетом limit и offset
+            return DefaultResponse(error=False, message='Успешно', payload=result)
+
+    except Exception as e:
+        logging.error(f"Ошибка при сборе информации по городу {city_name} : {e}")
+        return DefaultResponse(error=True, message="Проверьте введенные параметры", payload=None)
