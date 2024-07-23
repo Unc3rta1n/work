@@ -4,7 +4,7 @@ import asyncio
 
 
 async def parse_data():
-    """Запускаем парсер каждые 30 секунд."""
+    """Запускаем парсер каждый час."""
     logging.info("Сбор информации с городов")
     while True:
         await get_data_for_all_cities()
@@ -16,4 +16,4 @@ loop = asyncio.get_event_loop()
 loop.create_task(parse_data())
 
 
-uvicorn.run(app, host="127.0.0.1", port=8001)  # прикол для дебага
+# uvicorn.run(app, host="127.0.0.1", port=8001)  # прикол для дебага
