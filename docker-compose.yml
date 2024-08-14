@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  fastapi:
+    build:
+      context: ./fastapiс
+    container_name: fastapi_container
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - my_network
+
+  bot:
+    build:
+      context: ./bot
+    restart: always
+    networks:
+      - my_network
+
+  agent:
+    build:
+      context: ./agent
+    restart: always
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
