@@ -1,0 +1,377 @@
+﻿  Проверка исходных файлов
+  Удаленное копирование исходных файлов в "10.1.0.156"
+  Проверка архитектуры
+  Проверка архитектуры
+  Запуск удаленной сборки.
+  Компиляция исходных файлов:
+  API.cpp
+C:\Users\aquahaze\source\repos\FileAgent\api\..\Configuration.h(8,21): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\api\..\util\FileManager.h(23,14): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\api\..\util\FileManager.h(32,14): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\api\..\util\FileManager.h(34,41): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\api\..\util\FileManager.h(34,41): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\api\..\util\FileManager.h(34,57): error : template argument 2 is invalid
+C:\Users\aquahaze\source\repos\FileAgent\api\..\util\FileManager.h(34,57): error : template argument 5 is invalid
+/usr/local/include/cpr/cprtypes.h(34,43): error : expected ‘)’ before ‘str’
+/usr/local/include/cpr/cprtypes.h(123,25): error : expected ‘)’ before ‘url’
+/usr/local/include/cpr/filesystem.h(15,21): error : ‘filesystem’ is not a namespace-name; did you mean ‘system’?
+/usr/local/include/cpr/callback.h(32,50): error : ‘string_view’ in namespace ‘std’ does not name a type
+/usr/local/include/cpr/callback.h(32,45): message : ‘std::string_view’ is only available from C++17 onwards
+/usr/local/include/cpr/callback.h(33,32): error : ‘string_view’ in namespace ‘std’ does not name a type
+/usr/local/include/cpr/callback.h(33,27): message : ‘std::string_view’ is only available from C++17 onwards
+/usr/local/include/cpr/callback.h(38,35): error : ‘string_view’ in namespace ‘std’ does not name a type
+/usr/local/include/cpr/callback.h(38,30): message : ‘std::string_view’ is only available from C++17 onwards
+/usr/local/include/cpr/callback.h(45,49): error : ‘string_view’ in namespace ‘std’ does not name a type
+/usr/local/include/cpr/callback.h(45,44): message : ‘std::string_view’ is only available from C++17 onwards
+/usr/local/include/cpr/callback.h(46,32): error : ‘string_view’ in namespace ‘std’ does not name a type
+/usr/local/include/cpr/callback.h(46,27): message : ‘std::string_view’ is only available from C++17 onwards
+/usr/local/include/cpr/callback.h(51,35): error : ‘string_view’ in namespace ‘std’ does not name a type
+/usr/local/include/cpr/callback.h(51,30): message : ‘std::string_view’ is only available from C++17 onwards
+/usr/local/include/cpr/callback.h(105,10): error : ‘optional’ in namespace ‘std’ does not name a template type
+/usr/local/include/cpr/callback.h(105,5): message : ‘std::optional’ is only available from C++17 onwards
+/usr/local/include/cpr/callback.h(97,127): error : class ‘cpr::CancellationCallback’ does not have any field named ‘user_cb’
+/usr/local/include/cpr/callback.h(97,157): error : missing template arguments before ‘{’ token
+/usr/local/include/cpr/callback.h(97,157): error : expected ‘}’ before ‘{’ token
+/usr/local/include/cpr/callback.h(97,134): message : to match this ‘{’
+/usr/local/include/cpr/callback.h(97,162): error : expected ‘;’ before ‘}’ token
+/usr/local/include/cpr/ssl_options.h(91,14): error : ‘fs’ has not been declared
+/usr/local/include/cpr/ssl_options.h(91,22): error : expected ‘)’ before ‘&&’ token
+/usr/local/include/cpr/ssl_options.h(95,11): error : ‘fs’ does not name a type
+/usr/local/include/cpr/ssl_options.h(107,13): error : ‘fs’ has not been declared
+/usr/local/include/cpr/ssl_options.h(107,21): error : expected ‘)’ before ‘&&’ token
+/usr/local/include/cpr/ssl_options.h(120,13): error : ‘fs’ has not been declared
+/usr/local/include/cpr/ssl_options.h(120,21): error : expected ‘)’ before ‘&&’ token
+/usr/local/include/cpr/ssl_options.h(129,5): error : ‘fs’ does not name a type
+/usr/local/include/cpr/ssl_options.h(123,59): error : class ‘cpr::ssl::KeyFile’ does not have any field named ‘filename’
+/usr/local/include/cpr/ssl_options.h(164,12): error : ‘fs’ has not been declared
+/usr/local/include/cpr/ssl_options.h(164,20): error : expected ‘)’ before ‘&&’ token
+/usr/local/include/cpr/ssl_options.h(313,12): error : ‘fs’ has not been declared
+/usr/local/include/cpr/ssl_options.h(313,20): error : expected ‘)’ before ‘&&’ token
+/usr/local/include/cpr/ssl_options.h(315,5): error : ‘fs’ does not name a type
+/usr/local/include/cpr/ssl_options.h(322,12): error : ‘fs’ has not been declared
+/usr/local/include/cpr/ssl_options.h(322,20): error : expected ‘)’ before ‘&&’ token
+/usr/local/include/cpr/ssl_options.h(324,5): error : ‘fs’ does not name a type
+/usr/local/include/cpr/ssl_options.h(341,9): error : ‘fs’ has not been declared
+/usr/local/include/cpr/ssl_options.h(341,17): error : expected ‘)’ before ‘&&’ token
+/usr/local/include/cpr/ssl_options.h(343,5): error : ‘fs’ does not name a type
+/usr/local/include/cpr/ssl_options.h(465,25): error : ‘const class cpr::ssl::CertFile’ has no member named ‘filename’
+/usr/local/include/cpr/ssl_options.h(465,25): error :   465 |         cert_file = opt.filename.string();
+/usr/local/include/cpr/ssl_options.h(465,25): error :       |                         ^~~~~~~~
+/usr/local/include/cpr/ssl_options.h(469,24): error : ‘const class cpr::ssl::KeyFile’ has no member named ‘filename’
+/usr/local/include/cpr/ssl_options.h(469,24): error :   469 |         key_file = opt.filename.string();
+/usr/local/include/cpr/ssl_options.h(469,24): error :       |                        ^~~~~~~~
+/usr/local/include/cpr/ssl_options.h(567,23): error : ‘const class cpr::ssl::CaInfo’ has no member named ‘filename’
+/usr/local/include/cpr/ssl_options.h(567,23): error :   567 |         ca_info = opt.filename.string();
+/usr/local/include/cpr/ssl_options.h(567,23): error :       |                       ^~~~~~~~
+/usr/local/include/cpr/ssl_options.h(570,23): error : ‘const class cpr::ssl::CaPath’ has no member named ‘filename’
+/usr/local/include/cpr/ssl_options.h(570,23): error :   570 |         ca_path = opt.filename.string();
+/usr/local/include/cpr/ssl_options.h(570,23): error :       |                       ^~~~~~~~
+/usr/local/include/cpr/ssl_options.h(578,24): error : ‘const class cpr::ssl::Crl’ has no member named ‘filename’
+/usr/local/include/cpr/ssl_options.h(578,24): error :   578 |         crl_file = opt.filename.string();
+/usr/local/include/cpr/ssl_options.h(578,24): error :       |                        ^~~~~~~~
+/usr/local/include/cpr/async_wrapper.h(132,57): error : expected constructor, destructor, or type conversion before ‘;’ token
+/usr/local/include/cpr/async_wrapper.h(135,93): error : expected constructor, destructor, or type conversion before ‘;’ token
+/usr/local/include/cpr/threadpool.h(77,5): error : ‘Submit’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/threadpool.h(77,5): error :    77 |     auto Submit(Fn&& fn, Args&&... args) {
+/usr/local/include/cpr/threadpool.h(77,5): error :       |     ^~~~
+/usr/local/include/cpr/threadpool.h(77,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/threadpool.h(85,130): error : ‘invoke’ is not a member of ‘std’
+/usr/local/include/cpr/threadpool.h(85,130): message : ‘std::invoke’ is only available from C++17 onwards
+/usr/local/include/cpr/async.h(26,1): error : ‘async’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/async.h(26,1): error :    26 | auto async(Fn&& fn, Args&&... args) {
+/usr/local/include/cpr/async.h(26,1): error :       | ^~~~
+/usr/local/include/cpr/async.h(26,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/async.h(27,24): error : missing template arguments before ‘{’ token
+/usr/local/include/cpr/async.h(27,24): error : expected ‘;’ before ‘{’ token
+/usr/local/include/cpr/async.h(27,115): error : expected ‘;’ before ‘}’ token
+/usr/local/include/cpr/auth.h(13,36): error : expected ‘)’ before ‘username’
+/usr/local/include/cpr/buffer.h(14,42): error : ‘fs’ has not been declared
+/usr/local/include/cpr/buffer.h(14,50): error : expected ‘,’ or ‘...’ before ‘&&’ token
+/usr/local/include/cpr/buffer.h(28,11): error : ‘fs’ does not name a type
+/usr/local/include/cpr/buffer.h(18,115): error : class ‘cpr::Buffer’ does not have any field named ‘filename’
+/usr/local/include/cpr/buffer.h(18,134): error : ‘p_filename’ was not declared in this scope
+/usr/local/include/cpr/multipart.h(20,128): error : ‘const struct cpr::Buffer’ has no member named ‘filename’
+/usr/local/include/cpr/multipart.h(20,115): error : no matching function for call to ‘std::__cxx11::basic_string<char>::basic_string(<brace-enclosed initializer list>)’
+/usr/include/c++/11/bits/basic_string.h(638,9): message : candidate: ‘template<class _InputIterator, class> std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(_InputIterator, _InputIterator, const _Alloc&) [with _InputIterator = _InputIterator; <template-parameter-2-2> = <template-parameter-1-2>; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(638,9): message :   638 |         basic_string(_InputIterator __beg, _InputIterator __end,
+/usr/include/c++/11/bits/basic_string.h(638,9): message :       |         ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(638,9): message : template argument deduction/substitution failed:
+/usr/include/c++/11/bits/basic_string.h(600,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&&, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(600,7): message :   600 |       basic_string(basic_string&& __str, const _Alloc& __a)
+/usr/include/c++/11/bits/basic_string.h(600,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(600,7): message : candidate expects 2 arguments, 1 provided
+/usr/include/c++/11/bits/basic_string.h(596,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(596,7): message :   596 |       basic_string(const basic_string& __str, const _Alloc& __a)
+/usr/include/c++/11/bits/basic_string.h(596,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(596,7): message : candidate expects 2 arguments, 1 provided
+/usr/include/c++/11/bits/basic_string.h(592,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(std::initializer_list<_Tp>, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(592,7): message :   592 |       basic_string(initializer_list<_CharT> __l, const _Alloc& __a = _Alloc())
+/usr/include/c++/11/bits/basic_string.h(592,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(592,7): message : conversion of argument 1 would be ill-formed:
+/usr/include/c++/11/bits/basic_string.h(565,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(565,7): message :   565 |       basic_string(basic_string&& __str) noexcept
+/usr/include/c++/11/bits/basic_string.h(565,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(565,7): message : conversion of argument 1 would be ill-formed:
+/usr/include/c++/11/bits/basic_string.h(553,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type, _CharT, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>; std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type = long unsigned int]’
+/usr/include/c++/11/bits/basic_string.h(553,7): message :   553 |       basic_string(size_type __n, _CharT __c, const _Alloc& __a = _Alloc())
+/usr/include/c++/11/bits/basic_string.h(553,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(553,7): message : candidate expects 3 arguments, 1 provided
+/usr/include/c++/11/bits/basic_string.h(533,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const _CharT*, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(533,7): message :   533 |       basic_string(const _CharT* __s, const _Alloc& __a = _Alloc())
+/usr/include/c++/11/bits/basic_string.h(533,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(533,7): message : conversion of argument 1 would be ill-formed:
+/usr/include/c++/11/bits/basic_string.h(518,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const _CharT*, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>; std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type = long unsigned int]’
+/usr/include/c++/11/bits/basic_string.h(518,7): message :   518 |       basic_string(const _CharT* __s, size_type __n,
+/usr/include/c++/11/bits/basic_string.h(518,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(518,7): message : candidate expects 3 arguments, 1 provided
+/usr/include/c++/11/bits/basic_string.h(500,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>; std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type = long unsigned int]’
+/usr/include/c++/11/bits/basic_string.h(500,7): message :   500 |       basic_string(const basic_string& __str, size_type __pos,
+/usr/include/c++/11/bits/basic_string.h(500,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(500,7): message : candidate expects 4 arguments, 1 provided
+/usr/include/c++/11/bits/basic_string.h(484,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>; std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type = long unsigned int]’
+/usr/include/c++/11/bits/basic_string.h(484,7): message :   484 |       basic_string(const basic_string& __str, size_type __pos,
+/usr/include/c++/11/bits/basic_string.h(484,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(484,7): message : candidate expects 3 arguments, 1 provided
+/usr/include/c++/11/bits/basic_string.h(469,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type, const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>; std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type = long unsigned int]’
+/usr/include/c++/11/bits/basic_string.h(469,7): message :   469 |       basic_string(const basic_string& __str, size_type __pos,
+/usr/include/c++/11/bits/basic_string.h(469,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(469,7): message : candidate expects 3 arguments, 1 provided
+/usr/include/c++/11/bits/basic_string.h(456,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(456,7): message :   456 |       basic_string(const basic_string& __str)
+/usr/include/c++/11/bits/basic_string.h(456,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(456,7): message : conversion of argument 1 would be ill-formed:
+/usr/include/c++/11/bits/basic_string.h(448,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const _Alloc&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(448,7): message :   448 |       basic_string(const _Alloc& __a) _GLIBCXX_NOEXCEPT
+/usr/include/c++/11/bits/basic_string.h(448,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(448,7): message : conversion of argument 1 would be ill-formed:
+/usr/include/c++/11/bits/basic_string.h(439,7): message : candidate: ‘std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’
+/usr/include/c++/11/bits/basic_string.h(439,7): message :   439 |       basic_string()
+/usr/include/c++/11/bits/basic_string.h(439,7): message :       |       ^~~~~~~~~~~~
+/usr/include/c++/11/bits/basic_string.h(439,7): message : candidate expects 0 arguments, 1 provided
+/usr/local/include/cpr/body.h(22,26): error : expected ‘)’ before ‘body’
+/usr/local/include/cpr/body.h(41,28): error : invalid conversion from ‘const char*’ to ‘std::basic_istream<char>::char_type*’ {aka ‘char*’} [-fpermissive]
+/usr/local/include/cpr/body.h(41,28): error :    41 |         is.read(buffer.data(), length);
+/usr/local/include/cpr/body.h(41,28): error :       |                 ~~~~~~~~~~~^~
+/usr/local/include/cpr/body.h(41,28): error :       |                            |
+/usr/local/include/cpr/body.h(41,28): error :       |                            const char*
+/usr/include/c++/11/istream(486,23): message : initializing argument 1 of ‘std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::read(std::basic_istream<_CharT, _Traits>::char_type*, std::streamsize) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_istream<_CharT, _Traits>::char_type = char; std::streamsize = long int]’
+/usr/include/c++/11/istream(486,23): message :   486 |       read(char_type* __s, streamsize __n);
+/usr/include/c++/11/istream(486,23): message :       |            ~~~~~~~~~~~^~~
+/usr/local/include/cpr/interface.h(17,31): error : expected ‘)’ before ‘iface’
+/usr/local/include/cpr/range.h(11,22): error : ‘optional’ in namespace ‘std’ does not name a template type
+/usr/local/include/cpr/range.h(11,17): message : ‘std::optional’ is only available from C++17 onwards
+/usr/local/include/cpr/range.h(11,30): error : expected ‘,’ or ‘...’ before ‘<’ token
+/usr/local/include/cpr/range.h(12,23): error : ‘p_resume_from’ was not declared in this scope; did you mean ‘resume_from’?
+/usr/local/include/cpr/range.h(12,23): error :    12 |         resume_from = p_resume_from.value_or(0);
+/usr/local/include/cpr/range.h(12,23): error :       |                       ^~~~~~~~~~~~~
+/usr/local/include/cpr/range.h(12,23): error :       |                       resume_from
+/usr/local/include/cpr/range.h(13,21): error : ‘p_finish_at’ was not declared in this scope; did you mean ‘finish_at’?
+/usr/local/include/cpr/range.h(13,21): error :    13 |         finish_at = p_finish_at.value_or(-1);
+/usr/local/include/cpr/range.h(13,21): error :       |                     ^~~~~~~~~~~
+/usr/local/include/cpr/range.h(13,21): error :       |                     finish_at
+/usr/local/include/cpr/user_agent.h(16,31): error : expected ‘)’ before ‘useragent’
+/usr/local/include/cpr/session.h(198,5): error : ‘GetCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(198,5): error :   198 |     auto GetCallback(Then then);
+/usr/local/include/cpr/session.h(198,5): error :       |     ^~~~
+/usr/local/include/cpr/session.h(198,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(200,5): error : ‘PostCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(200,5): error :   200 |     auto PostCallback(Then then);
+/usr/local/include/cpr/session.h(200,5): error :       |     ^~~~
+/usr/local/include/cpr/session.h(200,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(202,5): error : ‘PutCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(202,5): error :   202 |     auto PutCallback(Then then);
+/usr/local/include/cpr/session.h(202,5): error :       |     ^~~~
+/usr/local/include/cpr/session.h(202,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(204,5): error : ‘HeadCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(204,5): error :   204 |     auto HeadCallback(Then then);
+/usr/local/include/cpr/session.h(204,5): error :       |     ^~~~
+/usr/local/include/cpr/session.h(204,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(206,5): error : ‘DeleteCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(206,5): error :   206 |     auto DeleteCallback(Then then);
+/usr/local/include/cpr/session.h(206,5): error :       |     ^~~~
+/usr/local/include/cpr/session.h(206,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(208,5): error : ‘OptionsCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(208,5): error :   208 |     auto OptionsCallback(Then then);
+/usr/local/include/cpr/session.h(208,5): error :       |     ^~~~
+/usr/local/include/cpr/session.h(208,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(210,5): error : ‘PatchCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(210,5): error :   210 |     auto PatchCallback(Then then);
+/usr/local/include/cpr/session.h(210,5): error :       |     ^~~~
+/usr/local/include/cpr/session.h(210,5): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(236,10): error : ‘variant’ in namespace ‘std’ does not name a template type
+/usr/local/include/cpr/session.h(236,5): message : ‘std::variant’ is only available from C++17 onwards
+/usr/local/include/cpr/session.h(277,16): error : ‘optional’ in namespace ‘std’ does not name a template type
+/usr/local/include/cpr/session.h(277,11): message : ‘std::optional’ is only available from C++17 onwards
+/usr/local/include/cpr/session.h(259,42): error : ‘make_unique’ is not a member of ‘std’
+/usr/local/include/cpr/session.h(259,42): message : ‘std::make_unique’ is only available from C++14 onwards
+/usr/local/include/cpr/session.h(259,63): error : expected primary-expression before ‘>’ token
+/usr/local/include/cpr/session.h(259,65): error : expected primary-expression before ‘)’ token
+/usr/local/include/cpr/session.h(259,66): error : could not convert ‘{<expression error>}’ from ‘<brace-enclosed initializer list>’ to ‘std::unique_ptr<cpr::Session::Callbacks>’
+/usr/local/include/cpr/session.h(301,1): error : ‘GetCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(301,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(306,1): error : ‘PostCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(306,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(311,1): error : ‘PutCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(311,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(316,1): error : ‘HeadCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(316,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(321,1): error : ‘DeleteCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(321,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(326,1): error : ‘OptionsCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(326,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/session.h(331,1): error : ‘PatchCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/session.h(331,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/multiperform.h(84,16): error : ‘optional’ in namespace ‘std’ does not name a template type
+/usr/local/include/cpr/multiperform.h(84,11): message : ‘std::optional’ is only available from C++17 onwards
+/usr/local/include/cpr/api.h(43,14): error : ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+/usr/local/include/cpr/api.h(43,35): error : expected primary-expression before ‘,’ token
+/usr/local/include/cpr/api.h(43,43): error : expected primary-expression before ‘>’ token
+/usr/local/include/cpr/api.h(43,44): error : expected primary-expression before ‘)’ token
+/usr/local/include/cpr/api.h(57,66): error : ‘std::index_sequence’ has not been declared
+/usr/local/include/cpr/api.h(57,80): error : expected ‘,’ or ‘...’ before ‘<’ token
+/usr/local/include/cpr/api.h(64,26): error : ‘make_index_sequence’ in namespace ‘std’ does not name a template type
+/usr/local/include/cpr/api.h(65,64): error : there are no arguments to ‘Indices’ that depend on a template parameter, so a declaration of ‘Indices’ must be available [-fpermissive]
+/usr/local/include/cpr/api.h(65,64): message : (if you use ‘-fpermissive’, G++ will accept your code, but allowing the use of an undeclared name is deprecated)
+/usr/local/include/cpr/api.h(101,21): error : ‘invoke’ is not a member of ‘std’
+/usr/local/include/cpr/api.h(101,21): message : ‘std::invoke’ is only available from C++17 onwards
+/usr/local/include/cpr/api.h(133,1): error : ‘GetCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/api.h(133,1): error :   133 | auto GetCallback(Then then, Ts... ts) {
+/usr/local/include/cpr/api.h(133,1): error :       | ^~~~
+/usr/local/include/cpr/api.h(133,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/api.h(154,1): error : ‘PostCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/api.h(154,1): error :   154 | auto PostCallback(Then then, Ts... ts) {
+/usr/local/include/cpr/api.h(154,1): error :       | ^~~~
+/usr/local/include/cpr/api.h(154,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/api.h(175,1): error : ‘PutCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/api.h(175,1): error :   175 | auto PutCallback(Then then, Ts... ts) {
+/usr/local/include/cpr/api.h(175,1): error :       | ^~~~
+/usr/local/include/cpr/api.h(175,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/api.h(196,1): error : ‘HeadCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/api.h(196,1): error :   196 | auto HeadCallback(Then then, Ts... ts) {
+/usr/local/include/cpr/api.h(196,1): error :       | ^~~~
+/usr/local/include/cpr/api.h(196,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/api.h(217,1): error : ‘DeleteCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/api.h(217,1): error :   217 | auto DeleteCallback(Then then, Ts... ts) {
+/usr/local/include/cpr/api.h(217,1): error :       | ^~~~
+/usr/local/include/cpr/api.h(217,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/api.h(238,1): error : ‘OptionsCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/api.h(238,1): error :   238 | auto OptionsCallback(Then then, Ts... ts) {
+/usr/local/include/cpr/api.h(238,1): error :       | ^~~~
+/usr/local/include/cpr/api.h(238,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/api.h(259,1): error : ‘PatchCallback’ function uses ‘auto’ type specifier without trailing return type
+/usr/local/include/cpr/api.h(259,1): error :   259 | auto PatchCallback(Then then, Ts... ts) {
+/usr/local/include/cpr/api.h(259,1): error :       | ^~~~
+/usr/local/include/cpr/api.h(259,1): message : deduced return type only available with ‘-std=c++14’ or ‘-std=gnu++14’
+/usr/local/include/cpr/api.h(273,29): error : ‘fs’ has not been declared
+/usr/local/include/cpr/api.h(273,52): error : expected primary-expression before ‘...’ token
+/usr/local/include/cpr/api.h(273,59): error : expected ‘;’ before ‘{’ token
+C:\Users\aquahaze\source\repos\FileAgent\api\API.cpp(12,22): error : ‘chrono_literals’ is not a namespace-name
+C:\Users\aquahaze\source\repos\FileAgent\api\API.cpp(117,50): warning : conversion from ‘int’ to ‘short unsigned int’ may change value [-Wconversion]
+  Configuration.cpp
+C:\Users\aquahaze\source\repos\FileAgent\Configuration.h(8,21): error : ‘filesystem’ in namespace ‘std’ does not name a type
+C:\Users\aquahaze\source\repos\FileAgent\Configuration.cpp(13,6): error : ‘filesystem’ in namespace ‘std’ does not name a type
+  FileAgent.cpp
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(23,14): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(32,14): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,41): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,41): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,57): error : template argument 2 is invalid
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,57): error : template argument 5 is invalid
+C:\Users\aquahaze\source\repos\FileAgent\Configuration.h(8,21): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\FileAgent.cpp(27,23): error : use of deleted function ‘API::API(const API&)’
+C:\Users\aquahaze\source\repos\FileAgent\FileAgent.cpp(27,23): error :    27 |         API api = API();
+C:\Users\aquahaze\source\repos\FileAgent\FileAgent.cpp(27,23): error :       |                       ^
+C:\Users\aquahaze\source\repos\FileAgent\api\API.h(7,7): message : ‘API::API(const API&)’ is implicitly deleted because the default definition would be ill-formed:
+C:\Users\aquahaze\source\repos\FileAgent\api\API.h(7,7): message :     7 | class API {
+C:\Users\aquahaze\source\repos\FileAgent\api\API.h(7,7): message :       |       ^~~
+C:\Users\aquahaze\source\repos\FileAgent\api\API.h(7,7): error : use of deleted function ‘wfrest::HttpServer::HttpServer(const wfrest::HttpServer&)’
+/usr/local/include/wfrest/HttpServer.h(16,7): message : ‘wfrest::HttpServer::HttpServer(const wfrest::HttpServer&)’ is implicitly deleted because the default definition would be ill-formed:
+/usr/local/include/wfrest/HttpServer.h(16,7): error : use of deleted function ‘WFServer<wfrest::HttpReq, wfrest::HttpResp>::WFServer(const WFServer<wfrest::HttpReq, wfrest::HttpResp>&)’
+/usr/local/include/workflow/WFServer.h(206,7): message : ‘WFServer<wfrest::HttpReq, wfrest::HttpResp>::WFServer(const WFServer<wfrest::HttpReq, wfrest::HttpResp>&)’ is implicitly deleted because the default definition would be ill-formed:
+/usr/local/include/workflow/WFServer.h(206,7): error : use of deleted function ‘WFServerBase::WFServerBase(const WFServerBase&)’
+/usr/local/include/workflow/WFServer.h(56,7): message : ‘WFServerBase::WFServerBase(const WFServerBase&)’ is implicitly deleted because the default definition would be ill-formed:
+/usr/local/include/workflow/WFServer.h(56,7): error : use of deleted function ‘std::atomic<long unsigned int>::atomic(const std::atomic<long unsigned int>&)’
+/usr/include/c++/11/atomic(898,7): message : declared here
+/usr/include/c++/11/atomic(898,7): message :   898 |       atomic(const atomic&) = delete;
+/usr/include/c++/11/atomic(898,7): message :       |       ^~~~~~
+/usr/local/include/workflow/WFServer.h(56,7): error : use of deleted function ‘std::mutex::mutex(const std::mutex&)’
+/usr/include/c++/11/bits/std_mutex.h(94,5): message : declared here
+/usr/include/c++/11/bits/std_mutex.h(94,5): message :    94 |     mutex(const mutex&) = delete;
+/usr/include/c++/11/bits/std_mutex.h(94,5): message :       |     ^~~~~
+/usr/local/include/workflow/WFServer.h(56,7): error : use of deleted function ‘std::condition_variable::condition_variable(const std::condition_variable&)’
+/usr/include/c++/11/condition_variable(86,5): message : declared here
+/usr/include/c++/11/condition_variable(86,5): message :    86 |     condition_variable(const condition_variable&) = delete;
+/usr/include/c++/11/condition_variable(86,5): message :       |     ^~~~~~~~~~~~~~~~~~
+/usr/local/include/wfrest/HttpServer.h(16,7): error : use of deleted function ‘wfrest::Noncopyable::Noncopyable(const wfrest::Noncopyable&)’
+/usr/local/include/wfrest/Noncopyable.h(10,5): message : declared here
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :    10 |     Noncopyable(const Noncopyable&) = delete;
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :       |     ^~~~~~~~~~~
+/usr/local/include/wfrest/HttpServer.h(16,7): error : use of deleted function ‘wfrest::BluePrint::BluePrint(const wfrest::BluePrint&)’
+/usr/local/include/wfrest/BluePrint.h(20,7): message : ‘wfrest::BluePrint::BluePrint(const wfrest::BluePrint&)’ is implicitly deleted because the default definition would be ill-formed:
+/usr/local/include/wfrest/BluePrint.h(20,7): error : use of deleted function ‘wfrest::Noncopyable::Noncopyable(const wfrest::Noncopyable&)’
+/usr/local/include/wfrest/Noncopyable.h(10,5): message : declared here
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :    10 |     Noncopyable(const Noncopyable&) = delete;
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :       |     ^~~~~~~~~~~
+/usr/local/include/wfrest/BluePrint.h(20,7): error : use of deleted function ‘wfrest::Router::Router(const wfrest::Router&)’
+/usr/local/include/wfrest/Router.h(13,7): message : ‘wfrest::Router::Router(const wfrest::Router&)’ is implicitly deleted because the default definition would be ill-formed:
+/usr/local/include/wfrest/Router.h(13,7): error : use of deleted function ‘wfrest::Noncopyable::Noncopyable(const wfrest::Noncopyable&)’
+/usr/local/include/wfrest/Noncopyable.h(10,5): message : declared here
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :    10 |     Noncopyable(const Noncopyable&) = delete;
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :       |     ^~~~~~~~~~~
+/usr/local/include/wfrest/Router.h(13,7): error : use of deleted function ‘wfrest::RouteTable::RouteTable(const wfrest::RouteTable&)’
+/usr/local/include/wfrest/RouteTable.h(75,7): message : ‘wfrest::RouteTable::RouteTable(const wfrest::RouteTable&)’ is implicitly deleted because the default definition would be ill-formed:
+/usr/local/include/wfrest/RouteTable.h(75,7): error : use of deleted function ‘wfrest::Noncopyable::Noncopyable(const wfrest::Noncopyable&)’
+/usr/local/include/wfrest/Noncopyable.h(10,5): message : declared here
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :    10 |     Noncopyable(const Noncopyable&) = delete;
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :       |     ^~~~~~~~~~~
+/usr/local/include/wfrest/RouteTable.h(75,7): error : use of deleted function ‘wfrest::RouteTableNode::RouteTableNode(const wfrest::RouteTableNode&)’
+/usr/local/include/wfrest/RouteTable.h(17,7): message : ‘wfrest::RouteTableNode::RouteTableNode(const wfrest::RouteTableNode&)’ is implicitly deleted because the default definition would be ill-formed:
+/usr/local/include/wfrest/RouteTable.h(17,7): error : use of deleted function ‘wfrest::Noncopyable::Noncopyable(const wfrest::Noncopyable&)’
+/usr/local/include/wfrest/Noncopyable.h(10,5): message : declared here
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :    10 |     Noncopyable(const Noncopyable&) = delete;
+/usr/local/include/wfrest/Noncopyable.h(10,5): message :       |     ^~~~~~~~~~~
+  FileManager.cpp
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(23,14): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(32,14): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,41): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,41): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,57): error : template argument 2 is invalid
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.h(34,57): error : template argument 5 is invalid
+C:\Users\aquahaze\source\repos\FileAgent\util\..\Configuration.h(8,21): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(13,58): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(13,58): error : ‘filesystem’ is not a member of ‘std’; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(13,74): error : template argument 2 is invalid
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(13,74): error : template argument 5 is invalid
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(14,9): error : ‘workingDir’ was not declared in this scope
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(14,31): error : ‘GetWorkningDirectory’ is not a member of ‘Globals’
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(15,14): error : ‘std::filesystem’ has not been declared
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(22,20): error : ‘LookupForUserDirectory’ was not declared in this scope
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(22,20): error :    22 |         auto dir = LookupForUserDirectory(file.user_id);
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(22,20): error :       |                    ^~~~~~~~~~~~~~~~~~~~~~
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(27,26): error : ‘std::filesystem’ has not been declared
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(28,30): error : ‘std::filesystem’ has not been declared
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(43,31): warning : catching polymorphic type ‘class std::exception’ by value [-Wcatch-value=]
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(54,20): error : ‘LookupForUserDirectory’ was not declared in this scope
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(54,20): error :    54 |         auto dir = LookupForUserDirectory(file.user_id);
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(54,20): error :       |                    ^~~~~~~~~~~~~~~~~~~~~~
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(59,26): error : ‘std::filesystem’ has not been declared
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(65,42): error : ‘std::filesystem’ has not been declared
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(74,31): warning : catching polymorphic type ‘class std::exception’ by value [-Wcatch-value=]
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(85,21): error : ‘LookupForUserDirectory’ was not declared in this scope
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(85,21): error :    85 |         auto path = LookupForUserDirectory(userId) / filename;
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(85,21): error :       |                     ^~~~~~~~~~~~~~~~~~~~~~
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(86,19): error : ‘std::filesystem’ has not been declared
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(92,6): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(111,41): error : ‘filesystem’ in namespace ‘std’ does not name a type; did you mean ‘system’?
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(113,56): error : ‘workingDir’ was not declared in this scope
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(113,37): error : ‘directory_iterator’ was not declared in this scope
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(119,48): error : request for member ‘emplace’ in ‘((FileManager*)this)->FileManager::loadedUserDirs’, which is of non-class type ‘int’
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(119,48): error :   119 |                                 loadedUserDirs.emplace((UserID) id, path);
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(119,48): error :       |                                                ^~~~~~~
+  UserFile.cpp
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(5,10): error : sha.h: No such file or directory
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(5,10): error :     5 | #include <sha.h>
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(5,10): error :       |          ^~~~~~~
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(5,10): error : compilation terminated.
+  Log.cpp
+  Main.cpp

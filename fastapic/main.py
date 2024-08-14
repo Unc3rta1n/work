@@ -41,7 +41,7 @@ async def create_user(user: str):
 
 @app.post("/create-file/{folder_name}")
 async def create_file(folder_name: str, file: UploadFile = File(...)):
-    url = "http://10.1.0.156:8080/upload"
+    url = "http://10.1.0.156:8056/upload"
     user_id = folder_name
 
     # Используем асинхронного клиента

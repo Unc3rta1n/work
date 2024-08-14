@@ -1,0 +1,27 @@
+﻿  Проверка исходных файлов
+  Удаленное копирование исходных файлов в "10.1.0.156"
+  Проверка архитектуры
+  Проверка архитектуры
+  Запуск удаленной сборки.
+  Компиляция исходных файлов:
+  API.cpp
+C:\Users\aquahaze\source\repos\FileAgent\api\API.cpp(117,50): warning : conversion from ‘int’ to ‘short unsigned int’ may change value [-Wconversion]
+  Configuration.cpp
+  FileAgent.cpp
+  FileManager.cpp
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(43,31): warning : catching polymorphic type ‘class std::exception’ by value [-Wcatch-value=]
+C:\Users\aquahaze\source\repos\FileAgent\util\FileManager.cpp(74,31): warning : catching polymorphic type ‘class std::exception’ by value [-Wcatch-value=]
+  UserFile.cpp
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(102,35): warning : conversion from ‘std::uniform_int_distribution<long unsigned int>::result_type’ {aka ‘long unsigned int’} to ‘int’ may change value [-Wconversion]
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(102,35): warning :   102 |         int rnd_int = random_int32(rng);
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(102,35): warning :       |                       ~~~~~~~~~~~~^~~~~
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(125,32): warning : conversion from ‘int’ to ‘uint8_t’ {aka ‘unsigned char’} may change value [-Wconversion]
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(125,32): warning :   125 |                 buffer[i % 21] ^= (iv & 0xff);
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(125,32): warning :       |                 ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(129,27): warning : conversion from ‘int’ to ‘uint8_t’ {aka ‘unsigned char’} may change value [-Wconversion]
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(129,27): warning :   129 |                 buffer[j] ^= rnd_byte;
+C:\Users\aquahaze\source\repos\FileAgent\model\UserFile.cpp(129,27): warning :       |                 ~~~~~~~~~~^~~~~~~~~~~
+  Log.cpp
+  Main.cpp
+  Связывание объектов
+  FileAgent.vcxproj -> C:\Users\aquahaze\source\repos\FileAgent\bin\x64\Debug\FileAgent.out
